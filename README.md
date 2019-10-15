@@ -1,15 +1,9 @@
----
-title: Cdiscount平台对接采坑心得
-categories: 跨境电商API
-tags:
-  - Cdiscount
-  - 电商
-  - API
-date: 2019-10-15 15:46:44
----
 本人从事IT行业7年，其中有三年从事跨境电商业务，期间对接了不少的跨境电商平台，颇有心得。但最近对接Cdiscount这个平台的时候，在坑里挣扎了许久，挫败感油然而生。
 
 Cdiscount是目前法国最大的电子商务平台，从它的[Marketplace API](https://dev.cdiscount.com/marketplace/)来看，API这快也算是挺成熟的。文档挺详细的，调用参数、示例和返回值等都很详细。但就是这么一个API文档详细的平台，也存在着一些坑，在此与大家分享。
+
+[查看原文](https://www.codernice.top/articles/4b72b298.html)
+![image](https://codernice.coding.me/pictureurl/codernice/Cdiscount.jpg)
 
 # 生成token
 
@@ -116,6 +110,6 @@ Cdiscount的坑就在这个参数，一不小心就掉坑里。这个参数可�
 客服是没有指望了，只能自己继续研究，意外的发现了几个神秘参数，BeginCreationDateSpecified、EndCreationDateSpecified和FetchOrderLinesSpecified，分别与BeginCreationDate、EndCreationDate和FetchOrderLines一一对应，这几个参数是bool类型，这或许是每个参数的开关，于是都设置为true.奇迹真的发生了，时间条件生效，明细也出来了。
 
 # 总结
-这个接口调通后，其他接口的问题也自然都解决了。坑主要就是两个地方，一是时间条件要跟状态条件一起用，时间才能生效。二是每个参数对应的Specified字段要设置为true，对应的字段才能生效。这些在文档都没体现，客服也不会跟你说，全靠自己摸索。
+这个接口调通后，其他接口的问题也自然都解决了。坑主要就是两个地方，**一是时间条件要跟状态条件一起用**，**时间才能生效**。**二是每个参数对应的Specified字段要设置为true**，**对应的字段才能生效**。这些在文档都没体现，客服也不会跟你说，全靠自己摸索。
 
 [源代码](https://github.com/codernice/CdiscoundAPI.git)
