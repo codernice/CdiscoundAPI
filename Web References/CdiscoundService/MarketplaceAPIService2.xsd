@@ -1,0 +1,2898 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://www.cdiscount.com" elementFormDefault="qualified" targetNamespace="http://www.cdiscount.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Product" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd6" namespace="http://www.cdiscount.com/ProductByIdentifier" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Mail" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Order" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Fulfilment" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Offer.Enum" />
+  <xs:element name="GetProductList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q1:HeaderMessage" />
+        <xs:element minOccurs="0" name="productFilter" nillable="true" type="tns:ProductFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ProductFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CategoryCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductFilter" nillable="true" type="tns:ProductFilter" />
+  <xs:element name="GetProductListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetProductListResult" nillable="true" type="tns:ProductListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ProductListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ProductList" nillable="true" type="tns:ArrayOfProduct" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProductListMessage" nillable="true" type="tns:ProductListMessage" />
+  <xs:complexType name="ServiceBaseAPIMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" base="q2:ServiceMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ErrorList" nillable="true" type="tns:ArrayOfError" />
+          <xs:element minOccurs="0" name="SellerLogin" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TokenId" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceBaseAPIMessage" nillable="true" type="tns:ServiceBaseAPIMessage" />
+  <xs:complexType name="ArrayOfError">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Error" nillable="true" type="tns:Error" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfError" nillable="true" type="tns:ArrayOfError" />
+  <xs:complexType name="Error">
+    <xs:sequence>
+      <xs:element name="ErrorType" type="tns:ErrorTypeEnum" />
+      <xs:element name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Error" nillable="true" type="tns:Error" />
+  <xs:simpleType name="ErrorTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UnexpectedException" />
+      <xs:enumeration value="MissingField" />
+      <xs:enumeration value="PackageNotFound" />
+      <xs:enumeration value="PackageMatchingFileError" />
+      <xs:enumeration value="OrderNotFound" />
+      <xs:enumeration value="OrderStateIncoherent" />
+      <xs:enumeration value="OrderLineCancelledAcceptedConflict" />
+      <xs:enumeration value="SellerNotFound" />
+      <xs:enumeration value="InvalidFileFormat" />
+      <xs:enumeration value="FileAlreadySubmitted" />
+      <xs:enumeration value="InvalidRequest" />
+      <xs:enumeration value="FileDownloadException" />
+      <xs:enumeration value="SellerNotAuthorized" />
+      <xs:enumeration value="OrderLineNotFound" />
+      <xs:enumeration value="OrderLineIncoherentState" />
+      <xs:enumeration value="FunctionNotActive" />
+      <xs:enumeration value="OrderPriceOrQuantityError" />
+      <xs:enumeration value="OrderTrackingInformationError" />
+      <xs:enumeration value="TooManyProductsInPackageError" />
+      <xs:enumeration value="Quota" />
+      <xs:enumeration value="RefundError" />
+      <xs:enumeration value="DiscussionCreationError" />
+      <xs:enumeration value="ConfigurationError" />
+      <xs:enumeration value="OrderPartiallyCanceled" />
+      <xs:enumeration value="OrderLineUpdateNotAuthorized" />
+      <xs:enumeration value="OrderUpdateNotAuthorized" />
+      <xs:enumeration value="AskingForReturnAndRemovalNotAuthorized" />
+      <xs:enumeration value="OrderLineError" />
+      <xs:enumeration value="UnauthorizedValueException" />
+      <xs:enumeration value="NotAuthorizedException" />
+      <xs:enumeration value="FulfillmentApiException" />
+      <xs:enumeration value="OfferNotFoundException" />
+      <xs:enumeration value="OperationManagerServiceException" />
+      <xs:enumeration value="InactiveSellerError" />
+      <xs:enumeration value="NoDataError" />
+      <xs:enumeration value="ProductIntegrationClosed" />
+      <xs:enumeration value="ProductNotReferencedException" />
+      <xs:enumeration value="ProductReferencedWithoutStockException" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ErrorTypeEnum" nillable="true" type="tns:ErrorTypeEnum" />
+  <xs:complexType name="ArrayOfProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Product" nillable="true" type="tns:Product" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProduct" nillable="true" type="tns:ArrayOfProduct" />
+  <xs:complexType name="Product">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BrandName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EANList" nillable="true" type="q3:ArrayOfstring" />
+      <xs:element minOccurs="0" name="ISBN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductType" type="tns:ProductTypeEnum" />
+      <xs:element minOccurs="0" name="SKU" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Product" nillable="true" type="tns:Product" />
+  <xs:simpleType name="ProductTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Standard" />
+      <xs:enumeration value="Variant" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProductTypeEnum" nillable="true" type="tns:ProductTypeEnum" />
+  <xs:element name="SubmitProductPackage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q4:HeaderMessage" />
+        <xs:element minOccurs="0" name="productPackageRequest" nillable="true" type="tns:ProductPackageRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ProductPackageRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ZipFileFullPath" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductPackageRequest" nillable="true" type="tns:ProductPackageRequest" />
+  <xs:element name="SubmitProductPackageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubmitProductPackageResult" nillable="true" type="tns:ProductIntegrationReportMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ProductIntegrationReportMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="NumberOfErrors" type="xs:int" />
+          <xs:element minOccurs="0" name="PackageId" type="xs:long" />
+          <xs:element minOccurs="0" name="PackageIntegrationStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProductLogList" nillable="true" type="tns:ArrayOfProductReportLog" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProductIntegrationReportMessage" nillable="true" type="tns:ProductIntegrationReportMessage" />
+  <xs:complexType name="ArrayOfProductReportLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductReportLog" nillable="true" type="tns:ProductReportLog" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductReportLog" nillable="true" type="tns:ArrayOfProductReportLog" />
+  <xs:complexType name="ProductReportLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LogDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ProductIntegrationStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PropertyList" nillable="true" type="tns:ArrayOfProductReportPropertyLog" />
+      <xs:element minOccurs="0" name="SKU" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Validated" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductReportLog" nillable="true" type="tns:ProductReportLog" />
+  <xs:complexType name="ArrayOfProductReportPropertyLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductReportPropertyLog" nillable="true" type="tns:ProductReportPropertyLog" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductReportPropertyLog" nillable="true" type="tns:ArrayOfProductReportPropertyLog" />
+  <xs:complexType name="ProductReportPropertyLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LogMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PropertyError" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductReportPropertyLog" nillable="true" type="tns:ProductReportPropertyLog" />
+  <xs:element name="GetProductPackageSubmissionResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q5:HeaderMessage" />
+        <xs:element minOccurs="0" name="productPackageFilter" nillable="true" type="tns:PackageFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="PackageFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PackageID" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PackageFilter" nillable="true" type="tns:PackageFilter" />
+  <xs:element name="GetProductPackageSubmissionResultResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetProductPackageSubmissionResultResult" nillable="true" type="tns:ProductIntegrationReportMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProductPackageProductMatchingFileData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q6:HeaderMessage" />
+        <xs:element minOccurs="0" name="productPackageFilter" nillable="true" type="tns:PackageFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProductPackageProductMatchingFileDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetProductPackageProductMatchingFileDataResult" nillable="true" type="tns:ProductMatchingFileMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ProductMatchingFileMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PackageId" type="xs:long" />
+          <xs:element minOccurs="0" name="ProductMatchingList" nillable="true" type="tns:ArrayOfProductMatching" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProductMatchingFileMessage" nillable="true" type="tns:ProductMatchingFileMessage" />
+  <xs:complexType name="ArrayOfProductMatching">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductMatching" nillable="true" type="tns:ProductMatching" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductMatching" nillable="true" type="tns:ArrayOfProductMatching" />
+  <xs:complexType name="ProductMatching">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Color" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element name="Ean" nillable="true" type="xs:string" />
+      <xs:element name="MatchingStatus" type="tns:ProductMatchingStatusEnum" />
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element name="SellerProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Size" nillable="true" type="xs:string" />
+      <xs:element name="Sku" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductMatching" nillable="true" type="tns:ProductMatching" />
+  <xs:simpleType name="ProductMatchingStatusEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Pending" />
+      <xs:enumeration value="Ok" />
+      <xs:enumeration value="Ko" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProductMatchingStatusEnum" nillable="true" type="tns:ProductMatchingStatusEnum" />
+  <xs:element name="GetAllowedCategoryTree">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q7:HeaderMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllowedCategoryTreeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAllowedCategoryTreeResult" nillable="true" type="tns:CategoryTreeMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CategoryTreeMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CategoryTree" nillable="true" type="tns:CategoryTree" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CategoryTreeMessage" nillable="true" type="tns:CategoryTreeMessage" />
+  <xs:complexType name="CategoryTree">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllowOfferIntegration" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AllowProductIntegration" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ChildrenCategoryList" nillable="true" type="tns:ArrayOfCategoryTree" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsEANOptional" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsStandardProductKindEligible" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsVariantProductKindEligible" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CategoryTree" nillable="true" type="tns:CategoryTree" />
+  <xs:complexType name="ArrayOfCategoryTree">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CategoryTree" nillable="true" type="tns:CategoryTree" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCategoryTree" nillable="true" type="tns:ArrayOfCategoryTree" />
+  <xs:element name="GetAllAllowedCategoryTree">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q8:HeaderMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllAllowedCategoryTreeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAllAllowedCategoryTreeResult" nillable="true" type="tns:CategoryTreeMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetModelList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q9:HeaderMessage" />
+        <xs:element minOccurs="0" name="modelFilter" nillable="true" type="tns:ModelFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ModelFilter">
+    <xs:sequence>
+      <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CategoryCodeList" nillable="true" type="q10:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ModelFilter" nillable="true" type="tns:ModelFilter" />
+  <xs:element name="GetModelListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetModelListResult" nillable="true" type="tns:ProductModelListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ProductModelListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ModelList" nillable="true" type="tns:ArrayOfProductModel" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProductModelListMessage" nillable="true" type="tns:ProductModelListMessage" />
+  <xs:complexType name="ArrayOfProductModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductModel" nillable="true" type="tns:ProductModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductModel" nillable="true" type="tns:ArrayOfProductModel" />
+  <xs:complexType name="ProductModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CategoryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Definition" nillable="true" type="tns:ModelDefinition" />
+      <xs:element minOccurs="0" name="ModelId" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductXmlStructure" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VariationValueList" nillable="true" type="tns:ArrayOfVariationDescription" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductModel" nillable="true" type="tns:ProductModel" />
+  <xs:complexType name="ModelDefinition">
+    <xs:sequence>
+      <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ListProperties" nillable="true" type="q11:ArrayOfKeyValueOfstringArrayOfstringty7Ep6D1" />
+      <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MandatoryModelProperties" nillable="true" type="q12:ArrayOfstring" />
+      <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MultipleFreeTextProperties" nillable="true" type="q13:ArrayOfKeyValueOfstringArrayOfstringty7Ep6D1" />
+      <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SingleFreeTextProperties" nillable="true" type="q14:ArrayOfKeyValueOfstringArrayOfstringty7Ep6D1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ModelDefinition" nillable="true" type="tns:ModelDefinition" />
+  <xs:complexType name="ArrayOfVariationDescription">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="VariationDescription" nillable="true" type="tns:VariationDescription" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVariationDescription" nillable="true" type="tns:ArrayOfVariationDescription" />
+  <xs:complexType name="VariationDescription">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="VariantValueDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VariantValueId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VariationDescription" nillable="true" type="tns:VariationDescription" />
+  <xs:element name="GetAllModelList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q15:HeaderMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllModelListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAllModelListResult" nillable="true" type="tns:ProductModelListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBrandList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q16:HeaderMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBrandListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Product" minOccurs="0" name="GetBrandListResult" nillable="true" type="q17:BrandListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfBrand">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Brand" nillable="true" type="tns:Brand" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBrand" nillable="true" type="tns:ArrayOfBrand" />
+  <xs:complexType name="Brand">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BrandName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Brand" nillable="true" type="tns:Brand" />
+  <xs:element name="GetProductListByIdentifier">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q18:HeaderMessage" />
+        <xs:element minOccurs="0" name="identifierRequest" nillable="true" type="tns:IdentifierRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="IdentifierRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IdentifierType" type="tns:IdentifierTypeEnum" />
+      <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ValueList" nillable="true" type="q19:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IdentifierRequest" nillable="true" type="tns:IdentifierRequest" />
+  <xs:simpleType name="IdentifierTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EAN" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="IdentifierTypeEnum" nillable="true" type="tns:IdentifierTypeEnum" />
+  <xs:element name="GetProductListByIdentifierResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://www.cdiscount.com/ProductByIdentifier" minOccurs="0" name="GetProductListByIdentifierResult" nillable="true" type="q20:ProductListByIdentifierMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitOfferPackage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q21:HeaderMessage" />
+        <xs:element minOccurs="0" name="offerPackageRequest" nillable="true" type="tns:OfferPackageRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferPackageRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ZipFileFullPath" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferPackageRequest" nillable="true" type="tns:OfferPackageRequest" />
+  <xs:element name="SubmitOfferPackageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubmitOfferPackageResult" nillable="true" type="tns:OfferIntegrationReportMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferIntegrationReportMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="NumberOfErrors" type="xs:int" />
+          <xs:element minOccurs="0" name="OfferLogList" nillable="true" type="tns:ArrayOfOfferReportLog" />
+          <xs:element minOccurs="0" name="PackageId" type="xs:long" />
+          <xs:element minOccurs="0" name="PackageIntegrationStatus" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OfferIntegrationReportMessage" nillable="true" type="tns:OfferIntegrationReportMessage" />
+  <xs:complexType name="ArrayOfOfferReportLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OfferReportLog" nillable="true" type="tns:OfferReportLog" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOfferReportLog" nillable="true" type="tns:ArrayOfOfferReportLog" />
+  <xs:complexType name="OfferReportLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LogDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OfferIntegrationStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PropertyList" nillable="true" type="tns:ArrayOfOfferReportPropertyLog" />
+      <xs:element minOccurs="0" name="SellerProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sku" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Validated" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferReportLog" nillable="true" type="tns:OfferReportLog" />
+  <xs:complexType name="ArrayOfOfferReportPropertyLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OfferReportPropertyLog" nillable="true" type="tns:OfferReportPropertyLog" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOfferReportPropertyLog" nillable="true" type="tns:ArrayOfOfferReportPropertyLog" />
+  <xs:complexType name="OfferReportPropertyLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LogMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PropertyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PropertyError" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferReportPropertyLog" nillable="true" type="tns:OfferReportPropertyLog" />
+  <xs:element name="GetOfferPackageSubmissionResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q22:HeaderMessage" />
+        <xs:element minOccurs="0" name="offerPackageFilter" nillable="true" type="tns:PackageFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOfferPackageSubmissionResultResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOfferPackageSubmissionResultResult" nillable="true" type="tns:OfferIntegrationReportMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOfferList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q23:HeaderMessage" />
+        <xs:element minOccurs="0" name="offerFilter" nillable="true" type="tns:OfferFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OfferPoolId" nillable="true" type="xs:int" />
+      <xs:element xmlns:q24="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SellerProductIdList" nillable="true" type="q24:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferFilter" nillable="true" type="tns:OfferFilter" />
+  <xs:element name="GetOfferListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOfferListResult" nillable="true" type="tns:OfferListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OfferList" nillable="true" type="tns:ArrayOfOffer" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OfferListMessage" nillable="true" type="tns:OfferListMessage" />
+  <xs:complexType name="ArrayOfOffer">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Offer" nillable="true" type="tns:Offer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOffer" nillable="true" type="tns:ArrayOfOffer" />
+  <xs:complexType name="Offer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BestShippingCharges" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DeaTax" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DiscountList" nillable="true" type="tns:ArrayOfDiscountComponent" />
+      <xs:element minOccurs="0" name="EcoTax" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IntegrationPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IsCDAV" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastUpdateDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LogisticMode" type="tns:LogisticMode" />
+      <xs:element minOccurs="0" name="MinimumPriceForPriceAlignment" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OfferBenchMark" nillable="true" type="tns:OfferPriceBenchMark" />
+      <xs:element minOccurs="0" name="OfferPoolList" nillable="true" type="tns:ArrayOfOfferPool" />
+      <xs:element minOccurs="0" name="OfferState" type="tns:OfferStateEnum" />
+      <xs:element minOccurs="0" name="ParentProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PriceMustBeAligned" type="tns:PriceAlignmentAction" />
+      <xs:element minOccurs="0" name="ProductCondition" type="tns:ProductConditionEnum" />
+      <xs:element minOccurs="0" name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductPackagingUnit" type="tns:ProductPackagingUnit" />
+      <xs:element minOccurs="0" name="ProductPackagingUnitPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ProductPackagingValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SellerProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShippingInformationList" nillable="true" type="tns:ArrayOfShippingInformation" />
+      <xs:element minOccurs="0" name="Stock" type="xs:int" />
+      <xs:element minOccurs="0" name="StrikedPrice" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="VatRate" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Offer" nillable="true" type="tns:Offer" />
+  <xs:complexType name="ArrayOfDiscountComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DiscountComponent" nillable="true" type="tns:DiscountComponent" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDiscountComponent" nillable="true" type="tns:ArrayOfDiscountComponent" />
+  <xs:complexType name="DiscountComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DiscountValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Type" type="tns:DiscountType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DiscountComponent" nillable="true" type="tns:DiscountComponent" />
+  <xs:simpleType name="DiscountType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="StrikedPrice" />
+      <xs:enumeration value="Flash" />
+      <xs:enumeration value="Sales" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DiscountType" nillable="true" type="tns:DiscountType" />
+  <xs:simpleType name="LogisticMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Marketplace" />
+      <xs:enumeration value="Fulfilment" />
+      <xs:enumeration value="Fulfilment on demand" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LogisticMode" nillable="true" type="tns:LogisticMode" />
+  <xs:complexType name="OfferPriceBenchMark">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BestOfferId" type="xs:long" />
+      <xs:element minOccurs="0" name="BestOfferPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IsBestOfferPrice" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProductCondition" type="tns:ProductConditionEnum" />
+      <xs:element minOccurs="0" name="ProductState" type="tns:ProductStateEnum" />
+      <xs:element minOccurs="0" name="ShippingCharges" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferPriceBenchMark" nillable="true" type="tns:OfferPriceBenchMark" />
+  <xs:simpleType name="ProductConditionEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="LikeNew" />
+      <xs:enumeration value="VeryGoodState" />
+      <xs:enumeration value="GoodState" />
+      <xs:enumeration value="AverageState" />
+      <xs:enumeration value="Refurbished" />
+      <xs:enumeration value="New" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProductConditionEnum" nillable="true" type="tns:ProductConditionEnum" />
+  <xs:simpleType name="ProductStateEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="New">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Used">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProductStateEnum" nillable="true" type="tns:ProductStateEnum" />
+  <xs:complexType name="ArrayOfOfferPool">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OfferPool" nillable="true" type="tns:OfferPool" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOfferPool" nillable="true" type="tns:ArrayOfOfferPool" />
+  <xs:complexType name="OfferPool">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferPool" nillable="true" type="tns:OfferPool" />
+  <xs:simpleType name="OfferStateEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WaitingForProductActivation">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Active">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Inactive">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Obsolete">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fulfillment">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OfferStateEnum" nillable="true" type="tns:OfferStateEnum" />
+  <xs:simpleType name="PriceAlignmentAction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Empty" />
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="Align" />
+      <xs:enumeration value="DontAlign" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PriceAlignmentAction" nillable="true" type="tns:PriceAlignmentAction" />
+  <xs:simpleType name="ProductPackagingUnit">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Liter" />
+      <xs:enumeration value="Kilogram" />
+      <xs:enumeration value="SquareMeter" />
+      <xs:enumeration value="CubicMeter" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProductPackagingUnit" nillable="true" type="tns:ProductPackagingUnit" />
+  <xs:complexType name="ArrayOfShippingInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ShippingInformation" nillable="true" type="tns:ShippingInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfShippingInformation" nillable="true" type="tns:ArrayOfShippingInformation" />
+  <xs:complexType name="ShippingInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalShippingCharges" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DeliveryMode" nillable="true" type="tns:DeliveryModeInformation" />
+      <xs:element minOccurs="0" name="MaxLeadTime" type="xs:int" />
+      <xs:element minOccurs="0" name="MinLeadTime" type="xs:int" />
+      <xs:element minOccurs="0" name="ShippingCharges" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ShippingInformation" nillable="true" type="tns:ShippingInformation" />
+  <xs:complexType name="DeliveryModeInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeliveryModeInformation" nillable="true" type="tns:DeliveryModeInformation" />
+  <xs:element name="GetOfferListPaginated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q25:HeaderMessage" />
+        <xs:element minOccurs="0" name="offerFilter" nillable="true" type="tns:OfferFilterPaginated" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferFilterPaginated">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OfferFilterCriterion" nillable="true" type="tns:OfferFilterCriterion" />
+      <xs:element minOccurs="0" name="OfferPoolId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="OfferSortOrder" nillable="true" type="tns:OfferSortOrder" />
+      <xs:element minOccurs="0" name="OfferStateFilter" nillable="true" type="tns:OfferStateFilter" />
+      <xs:element name="PageNumber" type="xs:int" />
+      <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SellerProductIdList" nillable="true" type="q26:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferFilterPaginated" nillable="true" type="tns:OfferFilterPaginated" />
+  <xs:simpleType name="OfferFilterCriterion">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NewOffersOnly" />
+      <xs:enumeration value="UsedOffersOnly" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OfferFilterCriterion" nillable="true" type="tns:OfferFilterCriterion" />
+  <xs:simpleType name="OfferSortOrder">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BySoldQuantityDescending" />
+      <xs:enumeration value="ByPriceAscending" />
+      <xs:enumeration value="ByPriceDescending" />
+      <xs:enumeration value="ByCreationDateDescending" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OfferSortOrder" nillable="true" type="tns:OfferSortOrder" />
+  <xs:simpleType name="OfferStateFilter">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AllOffersOnly" />
+      <xs:enumeration value="OnlineOffersOnly" />
+      <xs:enumeration value="PublishedOffersOnly" />
+      <xs:enumeration value="OfflineOffersOnly" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OfferStateFilter" nillable="true" type="tns:OfferStateFilter" />
+  <xs:element name="GetOfferListPaginatedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOfferListPaginatedResult" nillable="true" type="tns:OfferListPaginatedMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferListPaginatedMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:OfferListMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CurrentPageNumber" type="xs:int" />
+          <xs:element minOccurs="0" name="NumberOfPages" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OfferListPaginatedMessage" nillable="true" type="tns:OfferListPaginatedMessage" />
+  <xs:element name="GetSellerInformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q27:HeaderMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSellerInformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetSellerInformationResult" nillable="true" type="tns:SellerMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SellerMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DeliveryModes" nillable="true" type="tns:ArrayOfDeliveryModeInformation" />
+          <xs:element minOccurs="0" name="OfferPoolList" nillable="true" type="tns:ArrayOfOfferPool" />
+          <xs:element minOccurs="0" name="Seller" nillable="true" type="tns:Seller" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SellerMessage" nillable="true" type="tns:SellerMessage" />
+  <xs:complexType name="ArrayOfDeliveryModeInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DeliveryModeInformation" nillable="true" type="tns:DeliveryModeInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDeliveryModeInformation" nillable="true" type="tns:ArrayOfDeliveryModeInformation" />
+  <xs:complexType name="Seller">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsAvailable" type="tns:SellerSubStateEnum" />
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MobileNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerAddress" nillable="true" type="tns:Address" />
+      <xs:element minOccurs="0" name="ShopName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShopUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SiretNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="State" type="tns:SellerStateEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Seller" nillable="true" type="tns:Seller" />
+  <xs:simpleType name="SellerSubStateEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Holidays" />
+      <xs:enumeration value="ActiveSeller" />
+      <xs:enumeration value="BannedSeller" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SellerSubStateEnum" nillable="true" type="tns:SellerSubStateEnum" />
+  <xs:complexType name="Address">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ApartmentNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Building" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Civility" type="tns:Civility" />
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Instructions" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlaceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RelayId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Street" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ZipCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Address" nillable="true" type="tns:Address" />
+  <xs:simpleType name="Civility">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="MR" />
+      <xs:enumeration value="MISS" />
+      <xs:enumeration value="MRS" />
+      <xs:enumeration value="DR" />
+      <xs:enumeration value="PHD" />
+      <xs:enumeration value="PR" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Civility" nillable="true" type="tns:Civility" />
+  <xs:simpleType name="SellerStateEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Activated" />
+      <xs:enumeration value="Deactivated" />
+      <xs:enumeration value="PutOnNotice" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SellerStateEnum" nillable="true" type="tns:SellerStateEnum" />
+  <xs:element name="GetSellerIndicators">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q28:HeaderMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSellerIndicatorsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetSellerIndicatorsResult" nillable="true" type="tns:SellerIndicatorsMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SellerIndicatorsMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SellerIndicators" nillable="true" type="tns:ArrayOfSellerIndicator" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SellerIndicatorsMessage" nillable="true" type="tns:SellerIndicatorsMessage" />
+  <xs:complexType name="ArrayOfSellerIndicator">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SellerIndicator" nillable="true" type="tns:SellerIndicator" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSellerIndicator" nillable="true" type="tns:ArrayOfSellerIndicator" />
+  <xs:complexType name="SellerIndicator">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ComputationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Threshold" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ThresholdType" type="tns:TresholdType" />
+      <xs:element minOccurs="0" name="ValueD30" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ValueD60" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SellerIndicator" nillable="true" type="tns:SellerIndicator" />
+  <xs:simpleType name="TresholdType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ThresholdMin" />
+      <xs:enumeration value="ThresholdMax" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TresholdType" nillable="true" type="tns:TresholdType" />
+  <xs:element name="GetOrderList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q29:HeaderMessage" />
+        <xs:element minOccurs="0" name="orderFilter" nillable="true" type="tns:OrderFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OrderFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeginCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="BeginModificationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CorporationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EndModificationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FetchOrderLines" type="xs:boolean" />
+      <xs:element minOccurs="0" name="FetchParcels" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IncludeExternalFbcSiteId" type="xs:boolean" />
+      <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="OrderReferenceList" nillable="true" type="q30:ArrayOfstring" />
+      <xs:element minOccurs="0" name="OrderType" nillable="true" type="tns:OrderTypeEnum" />
+      <xs:element minOccurs="0" name="PartnerOrderRef" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="States" nillable="true" type="tns:ArrayOfOrderStateEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderFilter" nillable="true" type="tns:OrderFilter" />
+  <xs:simpleType name="OrderTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="IsFulfillment" />
+      <xs:enumeration value="MKPFBC" />
+      <xs:enumeration value="EXTFBC" />
+      <xs:enumeration value="None" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderTypeEnum" nillable="true" type="tns:OrderTypeEnum" />
+  <xs:complexType name="ArrayOfOrderStateEnum">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderStateEnum" type="tns:OrderStateEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderStateEnum" nillable="true" type="tns:ArrayOfOrderStateEnum" />
+  <xs:simpleType name="OrderStateEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CancelledByCustomer" />
+      <xs:enumeration value="WaitingForSellerAcceptation" />
+      <xs:enumeration value="AcceptedBySeller" />
+      <xs:enumeration value="PaymentInProgress" />
+      <xs:enumeration value="WaitingForShipmentAcceptation" />
+      <xs:enumeration value="Shipped" />
+      <xs:enumeration value="RefusedBySeller" />
+      <xs:enumeration value="AutomaticCancellation" />
+      <xs:enumeration value="PaymentRefused" />
+      <xs:enumeration value="ShipmentRefusedBySeller" />
+      <xs:enumeration value="None" />
+      <xs:enumeration value="ValidatedFianet" />
+      <xs:enumeration value="RefusedNoShipment" />
+      <xs:enumeration value="AvailableOnStore" />
+      <xs:enumeration value="NonPickedUpByCustomer" />
+      <xs:enumeration value="PickedUp" />
+      <xs:enumeration value="ServiceCanceled" />
+      <xs:enumeration value="PendingShipmentForAssociatedProduct" />
+      <xs:enumeration value="BlockedWaitingForTreatment" />
+      <xs:enumeration value="BlockedWaitingForProof" />
+      <xs:enumeration value="BlockedRepeatedLitigationSuspicion" />
+      <xs:enumeration value="BlockedFraudSuspicion" />
+      <xs:enumeration value="BlockedConfirmed" />
+      <xs:enumeration value="FinishedGenerixUpdate" />
+      <xs:enumeration value="BlockedRepeatedLitigationSuspicionConfirmation" />
+      <xs:enumeration value="BlockedFraudSuspicionConfirmation" />
+      <xs:enumeration value="CegidDown" />
+      <xs:enumeration value="BlockedAutomaticCds" />
+      <xs:enumeration value="BeingCancelled" />
+      <xs:enumeration value="BeingModified" />
+      <xs:enumeration value="RequestGoingToGnx" />
+      <xs:enumeration value="PartialInGnx" />
+      <xs:enumeration value="BeingValidatedFianet" />
+      <xs:enumeration value="BlockedMarketplaceService" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderStateEnum" nillable="true" type="tns:OrderStateEnum" />
+  <xs:element name="GetOrderListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOrderListResult" nillable="true" type="tns:OrderListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OrderListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OrderList" nillable="true" type="tns:ArrayOfOrder" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderListMessage" nillable="true" type="tns:OrderListMessage" />
+  <xs:complexType name="ArrayOfOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrder" nillable="true" type="tns:ArrayOfOrder" />
+  <xs:complexType name="Order">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ArchiveParcelList" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BillingAddress" nillable="true" type="tns:Address" />
+      <xs:element minOccurs="0" name="Corporation" nillable="true" type="tns:Corporation" />
+      <xs:element minOccurs="0" name="CreationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Customer" nillable="true" type="tns:Customer" />
+      <xs:element minOccurs="0" name="HasClaims" type="xs:boolean" />
+      <xs:element minOccurs="0" name="InitialTotalAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="InitialTotalShippingChargesAmount" type="xs:decimal" />
+      <xs:element name="IsCLogistiqueOrder" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastUpdatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ModGesLog" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModifiedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Offer" nillable="true" type="tns:OfferOrder" />
+      <xs:element minOccurs="0" name="OrderLineList" nillable="true" type="tns:ArrayOfOrderLine" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderState" nillable="true" type="tns:OrderStateEnum" />
+      <xs:element minOccurs="0" name="ParcelList" nillable="true" type="tns:ArrayOfParcel" />
+      <xs:element minOccurs="0" name="PartnerOrderRef" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShippedTotalAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ShippedTotalShippingCharges" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ShippingAddress" nillable="true" type="tns:Address" />
+      <xs:element minOccurs="0" name="ShippingCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShippingDateMax" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ShippingDateMin" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SiteCommissionPromisedAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SiteCommissionShippedAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SiteCommissionValidatedAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Status" type="tns:OrderStatusType" />
+      <xs:element minOccurs="0" name="ValidatedTotalAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ValidatedTotalShippingCharges" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ValidationStatus" type="tns:ValidationStatusType" />
+      <xs:element minOccurs="0" name="VisaCegid" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="VoucherList" nillable="true" type="tns:ArrayOfVoucher" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Order" nillable="true" type="tns:Order" />
+  <xs:complexType name="Corporation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BusinessUnitId" type="xs:short" />
+      <xs:element name="CorporationCode" nillable="true" type="xs:string" />
+      <xs:element name="CorporationId" type="xs:short" />
+      <xs:element minOccurs="0" name="CorporationName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsMarketPlaceActive" nillable="true" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Corporation" nillable="true" type="tns:Corporation" />
+  <xs:complexType name="Customer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Civility" nillable="true" type="tns:Civility" />
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EncryptedEmail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MobilePhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShippingFirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShippingLastName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Customer" nillable="true" type="tns:Customer" />
+  <xs:complexType name="OfferOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreationDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferOrder" nillable="true" type="tns:OfferOrder" />
+  <xs:complexType name="ArrayOfOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderLine" nillable="true" type="tns:OrderLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderLine" nillable="true" type="tns:ArrayOfOrderLine" />
+  <xs:complexType name="OrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcceptationState" nillable="true" type="tns:AcceptationStateEnum" />
+      <xs:element minOccurs="0" name="CategoryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliveryDateMax" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DeliveryDateMin" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="HasClaim" type="xs:boolean" />
+      <xs:element minOccurs="0" name="InitialPrice" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IsCDAV" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsNegotiated" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsProductEanGenerated" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderLineChildList" nillable="true" type="tns:ArrayOfOrderLine" />
+      <xs:element minOccurs="0" name="ProductCondition" nillable="true" type="tns:ProductConditionEnum" />
+      <xs:element minOccurs="0" name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PurchasePrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="RefundShippingCharges" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RowId" type="xs:int" />
+      <xs:element minOccurs="0" name="SellerProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShippingDateMax" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ShippingDateMin" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Sku" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SkuParent" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UnitAdditionalShippingCharges" type="xs:decimal" />
+      <xs:element minOccurs="0" name="UnitShippingCharges" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderLine" nillable="true" type="tns:OrderLine" />
+  <xs:simpleType name="AcceptationStateEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="AcceptedBySeller" />
+      <xs:enumeration value="RefusedBySeller" />
+      <xs:enumeration value="ShippedBySeller" />
+      <xs:enumeration value="RefundedAfterShipping" />
+      <xs:enumeration value="ShipmentRefusedBySeller" />
+      <xs:enumeration value="RefundedAfterShipmentRefused" />
+      <xs:enumeration value="CancelledBeforeNotificationByCustomer" />
+      <xs:enumeration value="CancelledBeforePaymentByCustomer" />
+      <xs:enumeration value="CancellationRequestPending" />
+      <xs:enumeration value="CancelledAfterPaymentByCustomer" />
+      <xs:enumeration value="RefundedAfterCustomerCancellation" />
+      <xs:enumeration value="PaymentRefused" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="AcceptationStateEnum" nillable="true" type="tns:AcceptationStateEnum" />
+  <xs:complexType name="ArrayOfParcel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Parcel" nillable="true" type="tns:Parcel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfParcel" nillable="true" type="tns:ArrayOfParcel" />
+  <xs:complexType name="Parcel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CustomerNum" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExternalCarrierName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExternalCarrierTrackingUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsCustomerReturn" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ParcelItemList" nillable="true" type="tns:ArrayOfParcelItem" />
+      <xs:element minOccurs="0" name="ParcelStatus" nillable="true" type="tns:ParcelStatus" />
+      <xs:element minOccurs="0" name="RealCarrierCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Parcel" nillable="true" type="tns:Parcel" />
+  <xs:complexType name="ArrayOfParcelItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ParcelItem" nillable="true" type="tns:ParcelItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfParcelItem" nillable="true" type="tns:ArrayOfParcelItem" />
+  <xs:complexType name="ParcelItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="Sku" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ParcelItem" nillable="true" type="tns:ParcelItem" />
+  <xs:simpleType name="ParcelStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Delivered" />
+      <xs:enumeration value="Not Delivered - Back Transporter" />
+      <xs:enumeration value="Not Delivered - Lost Or Broken" />
+      <xs:enumeration value="Committed The Transporter" />
+      <xs:enumeration value="On Going Delivery" />
+      <xs:enumeration value="In Point Relay" />
+      <xs:enumeration value="Other" />
+      <xs:enumeration value="Prepared" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ParcelStatus" nillable="true" type="tns:ParcelStatus" />
+  <xs:simpleType name="OrderStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NonValidated" />
+      <xs:enumeration value="NoPaymentAttempt" />
+      <xs:enumeration value="Cancelled" />
+      <xs:enumeration value="Validated" />
+      <xs:enumeration value="Waiting" />
+      <xs:enumeration value="Completed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderStatusType" nillable="true" type="tns:OrderStatusType" />
+  <xs:simpleType name="ValidationStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ValidatingFianet" />
+      <xs:enumeration value="PreAccepted" />
+      <xs:enumeration value="None" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ValidationStatusType" nillable="true" type="tns:ValidationStatusType" />
+  <xs:complexType name="ArrayOfVoucher">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Voucher" nillable="true" type="tns:Voucher" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVoucher" nillable="true" type="tns:ArrayOfVoucher" />
+  <xs:complexType name="Voucher">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
+      <xs:element name="RefundInformation" nillable="true" type="tns:RefundInformation" />
+      <xs:element minOccurs="0" name="Source" nillable="true" type="tns:VoucherSourceActor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Voucher" nillable="true" type="tns:Voucher" />
+  <xs:complexType name="RefundInformation">
+    <xs:sequence>
+      <xs:element name="Amount" type="xs:decimal" />
+      <xs:element name="MotiveId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RefundInformation" nillable="true" type="tns:RefundInformation" />
+  <xs:simpleType name="VoucherSourceActor">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Customer" />
+      <xs:enumeration value="CDiscount" />
+      <xs:enumeration value="Seller" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="VoucherSourceActor" nillable="true" type="tns:VoucherSourceActor" />
+  <xs:element name="GetServiceOrderList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q31:HeaderMessage" />
+        <xs:element minOccurs="0" name="orderFilter" nillable="true" type="tns:OrderFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetServiceOrderListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetServiceOrderListResult" nillable="true" type="tns:ServiceOrderListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ServiceOrderListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ServiceOrderList" nillable="true" type="tns:ArrayOfServiceOrder" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceOrderListMessage" nillable="true" type="tns:ServiceOrderListMessage" />
+  <xs:complexType name="ArrayOfServiceOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceOrder" nillable="true" type="tns:ServiceOrder" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceOrder" nillable="true" type="tns:ArrayOfServiceOrder" />
+  <xs:complexType name="ServiceOrder">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Order">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AssociatedOrderInfoList" nillable="true" type="tns:ArrayOfAssociatedOrderInfo" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceOrder" nillable="true" type="tns:ServiceOrder" />
+  <xs:complexType name="ArrayOfAssociatedOrderInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AssociatedOrderInfo" nillable="true" type="tns:AssociatedOrderInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAssociatedOrderInfo" nillable="true" type="tns:ArrayOfAssociatedOrderInfo" />
+  <xs:complexType name="AssociatedOrderInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AssociatedSku" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderState" nillable="true" type="tns:OrderStateEnum" />
+      <xs:element minOccurs="0" name="ProductSheetUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RealDeliveryDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ServiceOrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShippingAddress" nillable="true" type="tns:Address" />
+      <xs:element minOccurs="0" name="Sku" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AssociatedOrderInfo" nillable="true" type="tns:AssociatedOrderInfo" />
+  <xs:element name="ValidateOrderList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q32:HeaderMessage" />
+        <xs:element minOccurs="0" name="validateOrderListMessage" nillable="true" type="tns:ValidateOrderListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ValidateOrderListMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OrderList" nillable="true" type="tns:ArrayOfValidateOrder" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidateOrderListMessage" nillable="true" type="tns:ValidateOrderListMessage" />
+  <xs:complexType name="ArrayOfValidateOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ValidateOrder" nillable="true" type="tns:ValidateOrder" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfValidateOrder" nillable="true" type="tns:ArrayOfValidateOrder" />
+  <xs:complexType name="ValidateOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CarrierName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderLineList" nillable="true" type="tns:ArrayOfValidateOrderLine" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderState" type="tns:OrderStateEnum" />
+      <xs:element minOccurs="0" name="TrackingNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrackingUrl" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidateOrder" nillable="true" type="tns:ValidateOrder" />
+  <xs:complexType name="ArrayOfValidateOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ValidateOrderLine" nillable="true" type="tns:ValidateOrderLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfValidateOrderLine" nillable="true" type="tns:ArrayOfValidateOrderLine" />
+  <xs:complexType name="ValidateOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcceptationState" type="tns:AcceptationStateEnum" />
+      <xs:element minOccurs="0" name="ProductCondition" type="tns:ProductConditionEnum" />
+      <xs:element minOccurs="0" name="SellerProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TypeOfReturn" nillable="true" type="tns:AskingForReturnType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidateOrderLine" nillable="true" type="tns:ValidateOrderLine" />
+  <xs:simpleType name="AskingForReturnType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AskingForReturn" />
+      <xs:enumeration value="AskingForReturnAndRemoval" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="AskingForReturnType" nillable="true" type="tns:AskingForReturnType" />
+  <xs:element name="ValidateOrderListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ValidateOrderListResult" nillable="true" type="tns:ValidationResultMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ValidationResultMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ValidateOrderResults" nillable="true" type="tns:ArrayOfValidateOrderResult" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ValidationResultMessage" nillable="true" type="tns:ValidationResultMessage" />
+  <xs:complexType name="ArrayOfValidateOrderResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ValidateOrderResult" nillable="true" type="tns:ValidateOrderResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfValidateOrderResult" nillable="true" type="tns:ArrayOfValidateOrderResult" />
+  <xs:complexType name="ValidateOrderResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfError" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ValidateOrderLineResults" nillable="true" type="tns:ArrayOfValidateOrderLineResult" />
+      <xs:element minOccurs="0" name="Validated" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Warnings" nillable="true" type="tns:ArrayOfError" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidateOrderResult" nillable="true" type="tns:ValidateOrderResult" />
+  <xs:complexType name="ArrayOfValidateOrderLineResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ValidateOrderLineResult" nillable="true" type="tns:ValidateOrderLineResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfValidateOrderLineResult" nillable="true" type="tns:ArrayOfValidateOrderLineResult" />
+  <xs:complexType name="ValidateOrderLineResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfError" />
+      <xs:element minOccurs="0" name="SellerProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Updated" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidateOrderLineResult" nillable="true" type="tns:ValidateOrderLineResult" />
+  <xs:element name="ManageParcel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q33:HeaderMessage" />
+        <xs:element minOccurs="0" name="manageParcelRequest" nillable="true" type="tns:ManageParcelRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ManageParcelRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ParcelActionsList" nillable="true" type="tns:ArrayOfParcelInfos" />
+      <xs:element minOccurs="0" name="ScopusId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ManageParcelRequest" nillable="true" type="tns:ManageParcelRequest" />
+  <xs:complexType name="ArrayOfParcelInfos">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ParcelInfos" nillable="true" type="tns:ParcelInfos" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfParcelInfos" nillable="true" type="tns:ArrayOfParcelInfos" />
+  <xs:complexType name="ParcelInfos">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ManageParcel" type="tns:ParcelActionTypes" />
+      <xs:element minOccurs="0" name="ParcelNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sku" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ParcelInfos" nillable="true" type="tns:ParcelInfos" />
+  <xs:simpleType name="ParcelActionTypes">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="AskingForInvestigation" />
+          <xs:enumeration value="AskingForDeliveryCertification" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:element name="ParcelActionTypes" nillable="true" type="tns:ParcelActionTypes" />
+  <xs:element name="ManageParcelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ManageParcelResult" nillable="true" type="tns:ManageParcelResultMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ManageParcelResultMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ParcelActionResultList" nillable="true" type="tns:ArrayOfParcelActionResult" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ManageParcelResultMessage" nillable="true" type="tns:ManageParcelResultMessage" />
+  <xs:complexType name="ArrayOfParcelActionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ParcelActionResult" nillable="true" type="tns:ParcelActionResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfParcelActionResult" nillable="true" type="tns:ArrayOfParcelActionResult" />
+  <xs:complexType name="ParcelActionResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q34="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" base="q34:ServiceMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActionType" type="tns:ParcelActionTypes" />
+          <xs:element minOccurs="0" name="IsActionCreated" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ParcelNumber" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ParcelActionResult" nillable="true" type="tns:ParcelActionResult" />
+  <xs:element name="CreateRefundVoucherAfterShipment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q35:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:SellerRefundRequestMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SellerRefundRequestMessage">
+    <xs:sequence>
+      <xs:element name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element name="SellerRefundRequestList" nillable="true" type="tns:ArrayOfSellerRefundRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SellerRefundRequestMessage" nillable="true" type="tns:SellerRefundRequestMessage" />
+  <xs:complexType name="ArrayOfSellerRefundRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SellerRefundRequest" nillable="true" type="tns:SellerRefundRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSellerRefundRequest" nillable="true" type="tns:ArrayOfSellerRefundRequest" />
+  <xs:complexType name="SellerRefundRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Mode" type="tns:SellerRefundRequestMode" />
+      <xs:element minOccurs="0" name="Motive" type="tns:RefundMotive" />
+      <xs:element name="RefundOrderLine" nillable="true" type="tns:SellerRefundOrderLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SellerRefundRequest" nillable="true" type="tns:SellerRefundRequest" />
+  <xs:simpleType name="SellerRefundRequestMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Claim" />
+      <xs:enumeration value="Retraction" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SellerRefundRequestMode" nillable="true" type="tns:SellerRefundRequestMode" />
+  <xs:simpleType name="RefundMotive">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VendorRejection" />
+      <xs:enumeration value="ClientCancellation" />
+      <xs:enumeration value="VendorRejectionAndClientCancellation" />
+      <xs:enumeration value="ClientClaim" />
+      <xs:enumeration value="VendorInitiatedRefund" />
+      <xs:enumeration value="ClientRetraction" />
+      <xs:enumeration value="NoClientWithDrawal" />
+      <xs:enumeration value="ProductStockUnavailable" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RefundMotive" nillable="true" type="tns:RefundMotive" />
+  <xs:complexType name="SellerRefundOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Ean" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RefundShippingCharges" nillable="true" type="xs:boolean" />
+      <xs:element name="SellerProductId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SellerRefundOrderLine" nillable="true" type="tns:SellerRefundOrderLine" />
+  <xs:element name="CreateRefundVoucherAfterShipmentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateRefundVoucherAfterShipmentResult" nillable="true" type="tns:SellerRefundResultMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SellerRefundResultMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q36="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" base="q36:ServiceMessage">
+        <xs:sequence>
+          <xs:element name="OrderNumber" nillable="true" type="xs:string" />
+          <xs:element name="SellerRefundResultList" nillable="true" type="tns:ArrayOfSellerRefundResult" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SellerRefundResultMessage" nillable="true" type="tns:SellerRefundResultMessage" />
+  <xs:complexType name="ArrayOfSellerRefundResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SellerRefundResult" nillable="true" type="tns:SellerRefundResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSellerRefundResult" nillable="true" type="tns:ArrayOfSellerRefundResult" />
+  <xs:complexType name="SellerRefundResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q37="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" base="q37:ServiceMessage">
+        <xs:sequence>
+          <xs:element name="Ean" nillable="true" type="xs:string" />
+          <xs:element name="Motive" type="tns:RefundMotive" />
+          <xs:element name="SellerProductId" nillable="true" type="xs:string" />
+          <xs:element name="Value" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SellerRefundResult" nillable="true" type="tns:SellerRefundResult" />
+  <xs:element name="CreateRefundVoucher">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q38:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:CreateRefundVoucherRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CreateRefundVoucherRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommercialGestureList" nillable="true" type="tns:ArrayOfRefundInformation" />
+      <xs:element name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerRefundList" nillable="true" type="tns:ArrayOfSellerRefundRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreateRefundVoucherRequest" nillable="true" type="tns:CreateRefundVoucherRequest" />
+  <xs:complexType name="ArrayOfRefundInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RefundInformation" nillable="true" type="tns:RefundInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRefundInformation" nillable="true" type="tns:ArrayOfRefundInformation" />
+  <xs:element name="CreateRefundVoucherResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateRefundVoucherResult" nillable="true" type="tns:CreateRefundVoucherMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CreateRefundVoucherMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element name="CommercialGestureList" nillable="true" type="tns:ArrayOfRefundInformationMessage" />
+          <xs:element name="OrderNumber" nillable="true" type="xs:string" />
+          <xs:element name="SellerRefundList" nillable="true" type="tns:ArrayOfSellerRefundResult" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateRefundVoucherMessage" nillable="true" type="tns:CreateRefundVoucherMessage" />
+  <xs:complexType name="ArrayOfRefundInformationMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RefundInformationMessage" nillable="true" type="tns:RefundInformationMessage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRefundInformationMessage" nillable="true" type="tns:ArrayOfRefundInformationMessage" />
+  <xs:complexType name="RefundInformationMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q39="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" base="q39:ServiceMessage">
+        <xs:sequence>
+          <xs:element name="Amount" type="xs:decimal" />
+          <xs:element name="MotiveId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RefundInformationMessage" nillable="true" type="tns:RefundInformationMessage" />
+  <xs:element name="GetGlobalConfiguration">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q40:HeaderMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetGlobalConfigurationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetGlobalConfigurationResult" nillable="true" type="tns:GlobalConfigurationMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="GlobalConfigurationMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CarrierList" nillable="true" type="tns:ArrayOfCarrier" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GlobalConfigurationMessage" nillable="true" type="tns:GlobalConfigurationMessage" />
+  <xs:complexType name="ArrayOfCarrier">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Carrier" nillable="true" type="tns:Carrier" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCarrier" nillable="true" type="tns:ArrayOfCarrier" />
+  <xs:complexType name="Carrier">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CarrierId" type="xs:int" />
+      <xs:element minOccurs="0" name="DefaultURL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Carrier" nillable="true" type="tns:Carrier" />
+  <xs:element name="GenerateDiscussionMailGuid">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q41:HeaderMessage" />
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Mail" minOccurs="0" name="request" nillable="true" type="q42:DiscussionMailGuidCreationRequestMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateDiscussionMailGuidResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Mail" minOccurs="0" name="GenerateDiscussionMailGuidResult" nillable="true" type="q43:DiscussionMailGuidCreationResultMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitRelaysFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q44:HeaderMessage" />
+        <xs:element minOccurs="0" name="relaysFileRequest" nillable="true" type="tns:RelaysFileIntegrationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="RelaysFileIntegrationRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RelaysFileURI" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RelaysFileIntegrationRequest" nillable="true" type="tns:RelaysFileIntegrationRequest" />
+  <xs:element name="SubmitRelaysFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubmitRelaysFileResult" nillable="true" type="tns:RelaysFileDepositMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="RelaysFileDepositMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RelaysFileId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RelaysFileDepositMessage" nillable="true" type="tns:RelaysFileDepositMessage" />
+  <xs:element name="GetRelaysFileSubmissionResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q45:HeaderMessage" />
+        <xs:element minOccurs="0" name="relaysFileFilter" nillable="true" type="tns:RelaysFileFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="RelaysFileFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RelaysFileId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RelaysFileFilter" nillable="true" type="tns:RelaysFileFilter" />
+  <xs:element name="GetRelaysFileSubmissionResultResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetRelaysFileSubmissionResultResult" nillable="true" type="tns:RelayIntegrationReportMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="RelayIntegrationReportMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="NumberOfErrors" type="xs:int" />
+          <xs:element minOccurs="0" name="RelaysFileId" type="xs:int" />
+          <xs:element minOccurs="0" name="RelaysFileIntegrationStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RelaysLogList" nillable="true" type="tns:ArrayOfRelayIntegrationLog" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RelayIntegrationReportMessage" nillable="true" type="tns:RelayIntegrationReportMessage" />
+  <xs:complexType name="ArrayOfRelayIntegrationLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RelayIntegrationLog" nillable="true" type="tns:RelayIntegrationLog" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRelayIntegrationLog" nillable="true" type="tns:ArrayOfRelayIntegrationLog" />
+  <xs:complexType name="RelayIntegrationLog">
+    <xs:sequence>
+      <xs:element xmlns:q46="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Errors" nillable="true" type="q46:ArrayOfstring" />
+      <xs:element minOccurs="0" name="LogDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RelayReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Validated" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RelayIntegrationLog" nillable="true" type="tns:RelayIntegrationLog" />
+  <xs:element name="GetParcelShopList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q47:HeaderMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetParcelShopListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetParcelShopListResult" nillable="true" type="tns:ParcelShopListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ParcelShopListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ParcelShopList" nillable="true" type="tns:ArrayOfParcelShop" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ParcelShopListMessage" nillable="true" type="tns:ParcelShopListMessage" />
+  <xs:complexType name="ArrayOfParcelShop">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ParcelShop" nillable="true" type="tns:ParcelShop" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfParcelShop" nillable="true" type="tns:ArrayOfParcelShop" />
+  <xs:complexType name="ParcelShop">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddressComplement" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClosingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExceptionalClosingDate1" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExceptionalClosingDate2" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExceptionalClosingDate3" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExceptionalClosingDate4" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExceptionalClosingDate5" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FridayAfternoonClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FridayAfternoonOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FridayMorningClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FridayMorningOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsStoreShipmentActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsTakeAwayDeliveryActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Latitude" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="Locality" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Longitude" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="MondayAfternoonClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MondayAfternoonOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MondayMorningClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MondayMorningOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OpeningDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Reference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SaturdayAfternoonClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SaturdayAfternoonOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SaturdayMorningClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SaturdayMorningOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StreetAndStreetNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SundayAfternoonClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SundayAfternoonOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SundayMorningClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SundayMorningOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TemporaryClosingEndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TemporaryClosingStartDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ThursdayAfternoonClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ThursdayAfternoonOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ThursdayMorningClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ThursdayMorningOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TuesdayAfternoonClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TuesdayAfternoonOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TuesdayMorningClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TuesdayMorningOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WednesdayAfternoonClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WednesdayAfternoonOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WednesdayMorningClosingHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WednesdayMorningOpeningHour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ZipCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ParcelShop" nillable="true" type="tns:ParcelShop" />
+  <xs:element name="CloseDiscussionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q48:HeaderMessage" />
+        <xs:element minOccurs="0" name="closeDiscussionRequest" nillable="true" type="tns:CloseDiscussionRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CloseDiscussionRequest">
+    <xs:sequence>
+      <xs:element xmlns:q49="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DiscussionIds" nillable="true" type="q49:ArrayOflong" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloseDiscussionRequest" nillable="true" type="tns:CloseDiscussionRequest" />
+  <xs:element name="CloseDiscussionListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CloseDiscussionListResult" nillable="true" type="tns:CloseDiscussionResultMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CloseDiscussionResultMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CloseDiscussionResultList" nillable="true" type="tns:ArrayOfCloseDiscussionResult" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CloseDiscussionResultMessage" nillable="true" type="tns:CloseDiscussionResultMessage" />
+  <xs:complexType name="ArrayOfCloseDiscussionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CloseDiscussionResult" nillable="true" type="tns:CloseDiscussionResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCloseDiscussionResult" nillable="true" type="tns:ArrayOfCloseDiscussionResult" />
+  <xs:complexType name="CloseDiscussionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DiscussionId" type="xs:long" />
+      <xs:element minOccurs="0" name="OperationStatus" type="tns:CloseDiscussionStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloseDiscussionResult" nillable="true" type="tns:CloseDiscussionResult" />
+  <xs:simpleType name="CloseDiscussionStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DiscussionClosed" />
+      <xs:enumeration value="DiscussionNotFound" />
+      <xs:enumeration value="UnauthorizedCancelPending" />
+      <xs:enumeration value="UnauthorizedLastAnswer" />
+      <xs:enumeration value="AlreadyClosed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CloseDiscussionStatus" nillable="true" type="tns:CloseDiscussionStatus" />
+  <xs:element name="GetOrderClaimList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q50:HeaderMessage" />
+        <xs:element minOccurs="0" name="orderClaimFilter" nillable="true" type="tns:OrderClaimFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OrderClaimFilter">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:OrderQuestionFilter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OnlyWithMessageFromCdsCustomerService" nillable="true" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderClaimFilter" nillable="true" type="tns:OrderClaimFilter" />
+  <xs:complexType name="OrderQuestionFilter">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DiscussionFilterBase">
+        <xs:sequence>
+          <xs:element xmlns:q51="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="OrderNumberList" nillable="true" type="q51:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderQuestionFilter" nillable="true" type="tns:OrderQuestionFilter" />
+  <xs:complexType name="DiscussionFilterBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeginCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="BeginModificationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EndCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EndModificationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StatusList" nillable="true" type="tns:ArrayOfDiscussionStateFilter" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DiscussionFilterBase" nillable="true" type="tns:DiscussionFilterBase" />
+  <xs:complexType name="ArrayOfDiscussionStateFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DiscussionStateFilter" type="tns:DiscussionStateFilter" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDiscussionStateFilter" nillable="true" type="tns:ArrayOfDiscussionStateFilter" />
+  <xs:simpleType name="DiscussionStateFilter">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="All" />
+      <xs:enumeration value="Open" />
+      <xs:enumeration value="Closed" />
+      <xs:enumeration value="NotProcessed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DiscussionStateFilter" nillable="true" type="tns:DiscussionStateFilter" />
+  <xs:element name="GetOrderClaimListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOrderClaimListResult" nillable="true" type="tns:OrderClaimListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OrderClaimListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OrderClaimList" nillable="true" type="tns:ArrayOfOrderClaim" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderClaimListMessage" nillable="true" type="tns:OrderClaimListMessage" />
+  <xs:complexType name="ArrayOfOrderClaim">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderClaim" nillable="true" type="tns:OrderClaim" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderClaim" nillable="true" type="tns:ArrayOfOrderClaim" />
+  <xs:complexType name="OrderClaim">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:OrderQuestion">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClaimType" type="tns:ClaimType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderClaim" nillable="true" type="tns:OrderClaim" />
+  <xs:complexType name="OrderQuestion">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DiscussionThreadBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderQuestion" nillable="true" type="tns:OrderQuestion" />
+  <xs:complexType name="DiscussionThreadBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CloseDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
+      <xs:element minOccurs="0" name="LastUpdatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Messages" nillable="true" type="tns:ArrayOfMessage" />
+      <xs:element minOccurs="0" name="Status" type="tns:DiscussionState" />
+      <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DiscussionThreadBase" nillable="true" type="tns:DiscussionThreadBase" />
+  <xs:complexType name="ArrayOfMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Message" nillable="true" type="tns:Message" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMessage" nillable="true" type="tns:ArrayOfMessage" />
+  <xs:complexType name="Message">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Content" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sender" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Message" nillable="true" type="tns:Message" />
+  <xs:simpleType name="DiscussionState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Open" />
+      <xs:enumeration value="Closed" />
+      <xs:enumeration value="NotProcessed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DiscussionState" nillable="true" type="tns:DiscussionState" />
+  <xs:simpleType name="ClaimType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PackageNotReceived" />
+      <xs:enumeration value="IncompletePackage" />
+      <xs:enumeration value="MissingAccessories" />
+      <xs:enumeration value="DamagedProduct" />
+      <xs:enumeration value="WrongProductReference" />
+      <xs:enumeration value="WrongRefundAmount" />
+      <xs:enumeration value="RefundNotReceived" />
+      <xs:enumeration value="ProductNotWorking" />
+      <xs:enumeration value="Other" />
+      <xs:enumeration value="ProductCanceling" />
+      <xs:enumeration value="OrderCanceling" />
+      <xs:enumeration value="WishToWithdraw" />
+      <xs:enumeration value="OrderNotShipped" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ClaimType" nillable="true" type="tns:ClaimType" />
+  <xs:element name="GetOrderQuestionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q52:HeaderMessage" />
+        <xs:element minOccurs="0" name="orderQuestionFilter" nillable="true" type="tns:OrderQuestionFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrderQuestionListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOrderQuestionListResult" nillable="true" type="tns:OrderQuestionListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OrderQuestionListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OrderQuestionList" nillable="true" type="tns:ArrayOfOrderQuestion" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderQuestionListMessage" nillable="true" type="tns:OrderQuestionListMessage" />
+  <xs:complexType name="ArrayOfOrderQuestion">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderQuestion" nillable="true" type="tns:OrderQuestion" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderQuestion" nillable="true" type="tns:ArrayOfOrderQuestion" />
+  <xs:element name="GetOfferQuestionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q53:HeaderMessage" />
+        <xs:element minOccurs="0" name="offerQuestionFilter" nillable="true" type="tns:OfferQuestionFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferQuestionFilter">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DiscussionFilterBase">
+        <xs:sequence>
+          <xs:element xmlns:q54="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProductEANList" nillable="true" type="q54:ArrayOfstring" />
+          <xs:element xmlns:q55="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProductSellerReferenceList" nillable="true" type="q55:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OfferQuestionFilter" nillable="true" type="tns:OfferQuestionFilter" />
+  <xs:element name="GetOfferQuestionListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOfferQuestionListResult" nillable="true" type="tns:OfferQuestionListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferQuestionListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OfferQuestionList" nillable="true" type="tns:ArrayOfOfferQuestion" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OfferQuestionListMessage" nillable="true" type="tns:OfferQuestionListMessage" />
+  <xs:complexType name="ArrayOfOfferQuestion">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OfferQuestion" nillable="true" type="tns:OfferQuestion" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOfferQuestion" nillable="true" type="tns:ArrayOfOfferQuestion" />
+  <xs:complexType name="OfferQuestion">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DiscussionThreadBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ProductEAN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProductSellerReference" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OfferQuestion" nillable="true" type="tns:OfferQuestion" />
+  <xs:element name="GetDiscussionMailList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q56:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:GetDiscussionMailListRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="GetDiscussionMailListRequest">
+    <xs:sequence>
+      <xs:element xmlns:q57="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DiscussionIds" nillable="true" type="q57:ArrayOflong" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetDiscussionMailListRequest" nillable="true" type="tns:GetDiscussionMailListRequest" />
+  <xs:element name="GetDiscussionMailListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDiscussionMailListResult" nillable="true" type="tns:DiscussionMailListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DiscussionMailListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DiscussionMailList" nillable="true" type="tns:ArrayOfDiscussionMail" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DiscussionMailListMessage" nillable="true" type="tns:DiscussionMailListMessage" />
+  <xs:complexType name="ArrayOfDiscussionMail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DiscussionMail" nillable="true" type="tns:DiscussionMail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDiscussionMail" nillable="true" type="tns:ArrayOfDiscussionMail" />
+  <xs:complexType name="DiscussionMail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DiscussionId" type="xs:long" />
+      <xs:element minOccurs="0" name="MailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OperationStatus" type="tns:DiscussionMailStatusEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DiscussionMail" nillable="true" type="tns:DiscussionMail" />
+  <xs:simpleType name="DiscussionMailStatusEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DiscussionNotFound" />
+      <xs:enumeration value="UnknownError" />
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="DiscussionClosed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DiscussionMailStatusEnum" nillable="true" type="tns:DiscussionMailStatusEnum" />
+  <xs:element name="CreateExternalOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q58:HeaderMessage" />
+        <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Order" minOccurs="0" name="request" nillable="true" type="q59:OrderIntegrationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateExternalOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data" minOccurs="0" name="CreateExternalOrderResult" nillable="true" type="q60:OrderIntegrationMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExternalOrderStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q61:HeaderMessage" />
+        <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Order" minOccurs="0" name="request" nillable="true" type="q62:OrderStatusRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExternalOrderStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Order" minOccurs="0" name="GetExternalOrderStatusResult" nillable="true" type="q63:OrderStatusMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="ExternalOrderStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Ok" />
+      <xs:enumeration value="Pending" />
+      <xs:enumeration value="Ko" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ExternalOrderStatus" nillable="true" type="tns:ExternalOrderStatus" />
+  <xs:element name="GetProductStockList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q64:HeaderMessage" />
+        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Product" minOccurs="0" name="request" nillable="true" type="q65:FulfilmentProductRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="StockFilter">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="All" />
+      <xs:enumeration value="WithStock" />
+      <xs:enumeration value="WithoutStock" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="StockFilter" nillable="true" type="tns:StockFilter" />
+  <xs:simpleType name="FbcReferencementFilter">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="All" />
+      <xs:enumeration value="OnlyReferenced" />
+      <xs:enumeration value="OnlyNotReferenced" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FbcReferencementFilter" nillable="true" type="tns:FbcReferencementFilter" />
+  <xs:simpleType name="SoldOut">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="All" />
+      <xs:enumeration value="InSoldOut" />
+      <xs:enumeration value="InSoldOutFiveDays" />
+      <xs:enumeration value="InSoldOutFifteenDays" />
+      <xs:enumeration value="InSoldOutAfterFifteenDays" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SoldOut" nillable="true" type="tns:SoldOut" />
+  <xs:element name="GetProductStockListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Product" minOccurs="0" name="GetProductStockListResult" nillable="true" type="q66:ProductStockListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="FulfilmentProductListStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Ok" />
+      <xs:enumeration value="NoData" />
+      <xs:enumeration value="KO" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FulfilmentProductListStatus" nillable="true" type="tns:FulfilmentProductListStatus" />
+  <xs:element name="GetFulfilmentActivationReportList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q67:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:FulfilmentActivationReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FulfilmentActivationReportRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeginDate" nillable="true" type="xs:dateTime" />
+      <xs:element xmlns:q68="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DepositIdList" nillable="true" type="q68:ArrayOfint" />
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentActivationReportRequest" nillable="true" type="tns:FulfilmentActivationReportRequest" />
+  <xs:element name="GetFulfilmentActivationReportListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetFulfilmentActivationReportListResult" nillable="true" type="tns:FulfilmentActivationReportMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FulfilmentActivationReportMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element name="FulfilmentActivationReportList" nillable="true" type="tns:ArrayOfFulfilmentActivationReport" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FulfilmentActivationReportMessage" nillable="true" type="tns:FulfilmentActivationReportMessage" />
+  <xs:complexType name="ArrayOfFulfilmentActivationReport">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FulfilmentActivationReport" nillable="true" type="tns:FulfilmentActivationReport" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFulfilmentActivationReport" nillable="true" type="tns:ArrayOfFulfilmentActivationReport" />
+  <xs:complexType name="FulfilmentActivationReport">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DepositId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="DetailsList" nillable="true" type="tns:ArrayOfFulfilmentActivationReportDetails" />
+      <xs:element minOccurs="0" name="NumberOfActivatedProducts" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfDeactivatedProducts" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfProcessedProducts" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfProducts" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfProductsInError" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfRemainingProductsToProcess" type="xs:int" />
+      <xs:element minOccurs="0" name="ReportDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentActivationReport" nillable="true" type="tns:FulfilmentActivationReport" />
+  <xs:complexType name="ArrayOfFulfilmentActivationReportDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FulfilmentActivationReportDetails" nillable="true" type="tns:FulfilmentActivationReportDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFulfilmentActivationReportDetails" nillable="true" type="tns:ArrayOfFulfilmentActivationReportDetails" />
+  <xs:complexType name="FulfilmentActivationReportDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" type="tns:FulfilmentProductActionType" />
+      <xs:element minOccurs="0" name="ActionSuccess" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Height" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="Length" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerProductReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:float" />
+      <xs:element minOccurs="0" name="Width" nillable="true" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentActivationReportDetails" nillable="true" type="tns:FulfilmentActivationReportDetails" />
+  <xs:simpleType name="FulfilmentProductActionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Activation" />
+      <xs:enumeration value="Deactivation" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FulfilmentProductActionType" nillable="true" type="tns:FulfilmentProductActionType" />
+  <xs:element name="GetFulfilmentOrderListToSupply">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q69="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q69:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:FulfilmentOnDemandOrderLineFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FulfilmentOnDemandOrderLineFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OrderReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Warehouse" nillable="true" type="tns:WarehouseType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentOnDemandOrderLineFilter" nillable="true" type="tns:FulfilmentOnDemandOrderLineFilter" />
+  <xs:simpleType name="WarehouseType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CEM" />
+      <xs:enumeration value="ANZ" />
+      <xs:enumeration value="SMD" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="WarehouseType" nillable="true" type="tns:WarehouseType" />
+  <xs:element name="GetFulfilmentOrderListToSupplyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetFulfilmentOrderListToSupplyResult" nillable="true" type="tns:FulfilmentOrderLineListToSupplyMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FulfilmentOrderLineListToSupplyMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OrderLineList" nillable="true" type="tns:ArrayOfFulfilmentOrderLine" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FulfilmentOrderLineListToSupplyMessage" nillable="true" type="tns:FulfilmentOrderLineListToSupplyMessage" />
+  <xs:complexType name="ArrayOfFulfilmentOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FulfilmentOrderLine" nillable="true" type="tns:FulfilmentOrderLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFulfilmentOrderLine" nillable="true" type="tns:ArrayOfFulfilmentOrderLine" />
+  <xs:complexType name="FulfilmentOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExpectedCustomerDeliveryMax" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExpectedCustomerDeliveryMin" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LatestWarehouseDeliveryDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OrderDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OrderReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="SellerProductReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Warehouse" nillable="true" type="tns:WarehouseType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentOrderLine" nillable="true" type="tns:FulfilmentOrderLine" />
+  <xs:element name="SubmitFulfilmentSupplyOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q70="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q70:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:FulfilmentSupplyOrderRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FulfilmentSupplyOrderRequest">
+    <xs:sequence>
+      <xs:element name="ProductList" nillable="true" type="tns:ArrayOfFulfilmentProductDescription" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentSupplyOrderRequest" nillable="true" type="tns:FulfilmentSupplyOrderRequest" />
+  <xs:complexType name="ArrayOfFulfilmentProductDescription">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FulfilmentProductDescription" nillable="true" type="tns:FulfilmentProductDescription" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFulfilmentProductDescription" nillable="true" type="tns:ArrayOfFulfilmentProductDescription" />
+  <xs:complexType name="FulfilmentProductDescription">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExternalSupplyOrderId" nillable="true" type="xs:string" />
+      <xs:element name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="SellerProductReference" nillable="true" type="xs:string" />
+      <xs:element name="Warehouse" type="tns:WarehouseType" />
+      <xs:element minOccurs="0" name="WarehouseReceptionMinDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentProductDescription" nillable="true" type="tns:FulfilmentProductDescription" />
+  <xs:element name="SubmitFulfilmentSupplyOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubmitFulfilmentSupplyOrderResult" nillable="true" type="tns:SupplyOrderReportMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SupplyOrderReportMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element name="DepositId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SupplyOrderReportMessage" nillable="true" type="tns:SupplyOrderReportMessage" />
+  <xs:element name="SubmitFulfilmentOnDemandSupplyOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q71="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q71:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:FulfilmentOnDemandSupplyOrderRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FulfilmentOnDemandSupplyOrderRequest">
+    <xs:sequence>
+      <xs:element name="OrderLineList" nillable="true" type="tns:ArrayOfFulfilmentOrderLineRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentOnDemandSupplyOrderRequest" nillable="true" type="tns:FulfilmentOnDemandSupplyOrderRequest" />
+  <xs:complexType name="ArrayOfFulfilmentOrderLineRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FulfilmentOrderLineRequest" nillable="true" type="tns:FulfilmentOrderLineRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFulfilmentOrderLineRequest" nillable="true" type="tns:ArrayOfFulfilmentOrderLineRequest" />
+  <xs:complexType name="FulfilmentOrderLineRequest">
+    <xs:sequence>
+      <xs:element name="OrderReference" nillable="true" type="xs:string" />
+      <xs:element name="ProductEan" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentOrderLineRequest" nillable="true" type="tns:FulfilmentOrderLineRequest" />
+  <xs:element name="SubmitFulfilmentOnDemandSupplyOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubmitFulfilmentOnDemandSupplyOrderResult" nillable="true" type="tns:SupplyOrderReportMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFulfilmentDeliveryDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q72="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q72:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:FulfilmentDeliveryDocumentRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FulfilmentDeliveryDocumentRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DepositId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentDeliveryDocumentRequest" nillable="true" type="tns:FulfilmentDeliveryDocumentRequest" />
+  <xs:element name="GetFulfilmentDeliveryDocumentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q73="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Fulfilment" minOccurs="0" name="GetFulfilmentDeliveryDocumentResult" nillable="true" type="q73:FulfilmentDeliveryDocumentMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitOfferStateAction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q74="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q74:HeaderMessage" />
+        <xs:element minOccurs="0" name="offerStateRequest" nillable="true" type="tns:OfferStateActionRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferStateActionRequest">
+    <xs:sequence>
+      <xs:element xmlns:q75="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Fulfilment" name="Action" type="q75:OfferStateActionType" />
+      <xs:element minOccurs="0" name="SellerProductId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferStateActionRequest" nillable="true" type="tns:OfferStateActionRequest" />
+  <xs:element name="SubmitOfferStateActionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubmitOfferStateActionResult" nillable="true" type="tns:OfferStateReportMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferStateReportMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OfferStateReportMessage" nillable="true" type="tns:OfferStateReportMessage" />
+  <xs:element name="GetFulfilmentSupplyOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q76="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q76:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:SupplyOrderRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SupplyOrderRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeginModificationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EndModificationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PageNumber" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PageSize" nillable="true" type="xs:int" />
+      <xs:element xmlns:q77="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SupplyOrderNumberList" nillable="true" type="q77:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SupplyOrderRequest" nillable="true" type="tns:SupplyOrderRequest" />
+  <xs:element name="GetFulfilmentSupplyOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetFulfilmentSupplyOrderResult" nillable="true" type="tns:SupplyOrderMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SupplyOrderMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CurrentPageNumber" type="xs:int" />
+          <xs:element minOccurs="0" name="NumberOfPages" type="xs:int" />
+          <xs:element minOccurs="0" name="SupplyOrderLineList" nillable="true" type="tns:ArrayOfSupplyOrderLine" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SupplyOrderMessage" nillable="true" type="tns:SupplyOrderMessage" />
+  <xs:complexType name="ArrayOfSupplyOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SupplyOrderLine" nillable="true" type="tns:SupplyOrderLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSupplyOrderLine" nillable="true" type="tns:ArrayOfSupplyOrderLine" />
+  <xs:complexType name="SupplyOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsFod" type="xs:boolean" />
+      <xs:element xmlns:q78="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="OrderReferenceList" nillable="true" type="q78:ArrayOfstring" />
+      <xs:element minOccurs="0" name="OrderedQuantity" type="xs:int" />
+      <xs:element minOccurs="0" name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceivedQuantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SellerProductReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerSupplyOrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="tns:SupplyOrderStatusType" />
+      <xs:element minOccurs="0" name="SupplyOrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UndeliveredQuantity" type="xs:int" />
+      <xs:element minOccurs="0" name="Warehouse" nillable="true" type="tns:WarehouseType" />
+      <xs:element minOccurs="0" name="WarehouseReceptionMinDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SupplyOrderLine" nillable="true" type="tns:SupplyOrderLine" />
+  <xs:simpleType name="SupplyOrderStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Registered" />
+      <xs:enumeration value="AppointmentScheduled" />
+      <xs:enumeration value="SupplyingInProgress" />
+      <xs:enumeration value="SupplyingDone" />
+      <xs:enumeration value="Rejected" />
+      <xs:enumeration value="Validated" />
+      <xs:enumeration value="Cancelled" />
+      <xs:enumeration value="PartiallyReceived" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SupplyOrderStatusType" nillable="true" type="tns:SupplyOrderStatusType" />
+  <xs:element name="SubmitFulfilmentActivation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q79="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q79:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:FulfilmentActivationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FulfilmentActivationRequest">
+    <xs:sequence>
+      <xs:element xmlns:q80="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Fulfilment" minOccurs="0" name="ProductList" nillable="true" type="q80:ArrayOfProductActivationData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentActivationRequest" nillable="true" type="tns:FulfilmentActivationRequest" />
+  <xs:element name="SubmitFulfilmentActivationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubmitFulfilmentActivationResult" nillable="true" type="tns:FulfilmentActivationMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FulfilmentActivationMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DepositId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FulfilmentActivationMessage" nillable="true" type="tns:FulfilmentActivationMessage" />
+  <xs:element name="GetFulfilmentSupplyOrderReportList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q81="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q81:HeaderMessage" />
+        <xs:element minOccurs="0" name="request" nillable="true" type="tns:SupplyOrderReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SupplyOrderReportRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeginCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element xmlns:q82="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DepositIdList" nillable="true" type="q82:ArrayOfint" />
+      <xs:element minOccurs="0" name="EndCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PageNumber" type="xs:int" />
+      <xs:element name="PageSize" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SupplyOrderReportRequest" nillable="true" type="tns:SupplyOrderReportRequest" />
+  <xs:element name="GetFulfilmentSupplyOrderReportListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetFulfilmentSupplyOrderReportListResult" nillable="true" type="tns:SupplyOrderReportListMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SupplyOrderReportListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element name="CurrentPageNumber" type="xs:int" />
+          <xs:element name="NumberOfPages" type="xs:int" />
+          <xs:element name="ReportList" nillable="true" type="tns:ArrayOfSupplyOrderReport" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SupplyOrderReportListMessage" nillable="true" type="tns:SupplyOrderReportListMessage" />
+  <xs:complexType name="ArrayOfSupplyOrderReport">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SupplyOrderReport" nillable="true" type="tns:SupplyOrderReport" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSupplyOrderReport" nillable="true" type="tns:ArrayOfSupplyOrderReport" />
+  <xs:complexType name="SupplyOrderReport">
+    <xs:sequence>
+      <xs:element name="DepositId" type="xs:int" />
+      <xs:element name="ReportLineList" nillable="true" type="tns:ArrayOfSupplyOrderReportLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SupplyOrderReport" nillable="true" type="tns:SupplyOrderReport" />
+  <xs:complexType name="ArrayOfSupplyOrderReportLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SupplyOrderReportLine" nillable="true" type="tns:SupplyOrderReportLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSupplyOrderReportLine" nillable="true" type="tns:ArrayOfSupplyOrderReportLine" />
+  <xs:complexType name="SupplyOrderReportLine">
+    <xs:sequence>
+      <xs:element xmlns:q83="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorDetails" nillable="true" type="q83:ArrayOfKeyValueOfintstring" />
+      <xs:element name="OrderedQuantity" type="xs:int" />
+      <xs:element name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerId" type="xs:long" />
+      <xs:element minOccurs="0" name="SellerProductReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerSupplyOrderNumber" nillable="true" type="xs:string" />
+      <xs:element name="SupplyOrderNumber" nillable="true" type="xs:string" />
+      <xs:element name="Warehouse" nillable="true" type="tns:WarehouseType" />
+      <xs:element minOccurs="0" name="WarehouseReceptionMinDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SupplyOrderReportLine" nillable="true" type="tns:SupplyOrderReportLine" />
+  <xs:element name="GetOfferProductListPaginatedRest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q84="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" minOccurs="0" name="headerMessage" nillable="true" type="q84:HeaderMessage" />
+        <xs:element minOccurs="0" name="offerProductfilter" nillable="true" type="tns:OfferProductFilterPaginated" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferProductFilterPaginated">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OfferPerPage" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="OfferPoolId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="OfferSortOrder" nillable="true" type="tns:OfferAdvancedSortOrder" />
+      <xs:element minOccurs="0" name="OfferStateFilter" nillable="true" type="tns:OfferStateFilter" />
+      <xs:element minOccurs="0" name="OfferSupplyModeFilter" nillable="true" type="tns:OfferSupplyModeFilter" />
+      <xs:element name="PageNumber" type="xs:int" />
+      <xs:element xmlns:q85="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SellerProductIdList" nillable="true" type="q85:ArrayOfstring" />
+      <xs:element minOccurs="0" name="TotalItems" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferProductFilterPaginated" nillable="true" type="tns:OfferProductFilterPaginated" />
+  <xs:simpleType name="OfferAdvancedSortOrder">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OfferAscending" />
+      <xs:enumeration value="OfferDescending" />
+      <xs:enumeration value="ProductConditionIdAscending" />
+      <xs:enumeration value="ProductConditionIdDescending" />
+      <xs:enumeration value="PriceAscending" />
+      <xs:enumeration value="PriceDescending" />
+      <xs:enumeration value="QuantityAscending" />
+      <xs:enumeration value="QuantityDescending" />
+      <xs:enumeration value="LastUpdateDateAscending" />
+      <xs:enumeration value="LastUpdateDateDescending" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OfferAdvancedSortOrder" nillable="true" type="tns:OfferAdvancedSortOrder" />
+  <xs:simpleType name="OfferSupplyModeFilter">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Marketplace" />
+      <xs:enumeration value="CLogistique" />
+      <xs:enumeration value="FOD" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OfferSupplyModeFilter" nillable="true" type="tns:OfferSupplyModeFilter" />
+  <xs:element name="GetOfferProductListPaginatedRestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOfferProductListPaginatedRestResult" nillable="true" type="tns:OfferProductListPaginatedMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="OfferProductListPaginatedMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CurrentPageNumber" type="xs:int" />
+          <xs:element minOccurs="0" name="NumberOfPages" type="xs:int" />
+          <xs:element minOccurs="0" name="OfferProductList" nillable="true" type="tns:ArrayOfOfferProduct" />
+          <xs:element minOccurs="0" name="OfferTotalCount" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OfferProductListPaginatedMessage" nillable="true" type="tns:OfferProductListPaginatedMessage" />
+  <xs:complexType name="ArrayOfOfferProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OfferProduct" nillable="true" type="tns:OfferProduct" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOfferProduct" nillable="true" type="tns:ArrayOfOfferProduct" />
+  <xs:complexType name="OfferProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BestOffer" nillable="true" type="tns:OfferPriceBenchMark" />
+      <xs:element minOccurs="0" name="BestOfferId" type="xs:long" />
+      <xs:element minOccurs="0" name="BestOfferShippingCharges" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CatalogId" type="xs:int" />
+      <xs:element minOccurs="0" name="IsFod" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastUpdateDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OfferId" type="xs:long" />
+      <xs:element minOccurs="0" name="OfferPoolList" nillable="true" type="tns:ArrayOfOfferPool" />
+      <xs:element minOccurs="0" name="OfferState" type="tns:OfferStateEnum" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ProductCondition" type="tns:ProductConditionEnum" />
+      <xs:element minOccurs="0" name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductImageUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShippingCharges" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Stock" type="xs:int" />
+      <xs:element xmlns:q86="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Offer.Enum" minOccurs="0" name="SupplyMode" type="q86:SupplyModeType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfferProduct" nillable="true" type="tns:OfferProduct" />
+</xs:schema>

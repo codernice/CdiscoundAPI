@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://www.cdiscount.com" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.cdiscount.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.cdiscount.com/Imports">
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd0" namespace="http://www.cdiscount.com" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Framework.Core.Communication.Messages" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Device.Location" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Product" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd6" namespace="http://www.cdiscount.com/ProductByIdentifier" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Mail" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Order" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Fulfilment" />
+      <xsd:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Offer.Enum" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMarketplaceAPIService_GetProductList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetProductList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitProductPackage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitProductPackage" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitProductPackage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitProductPackageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetProductPackageSubmissionResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductPackageSubmissionResult" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetProductPackageSubmissionResult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductPackageSubmissionResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetProductPackageProductMatchingFileData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductPackageProductMatchingFileData" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetProductPackageProductMatchingFileData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductPackageProductMatchingFileDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetAllowedCategoryTree_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllowedCategoryTree" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetAllowedCategoryTree_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllowedCategoryTreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetAllAllowedCategoryTree_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAllowedCategoryTree" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetAllAllowedCategoryTree_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAllowedCategoryTreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetModelList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetModelList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetModelList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetModelListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetAllModelList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllModelList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetAllModelList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllModelListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetBrandList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrandList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetBrandList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrandListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetProductListByIdentifier_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductListByIdentifier" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetProductListByIdentifier_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductListByIdentifierResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitOfferPackage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitOfferPackage" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitOfferPackage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitOfferPackageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOfferPackageSubmissionResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferPackageSubmissionResult" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOfferPackageSubmissionResult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferPackageSubmissionResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOfferList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOfferList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOfferListPaginated_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferListPaginated" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOfferListPaginated_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferListPaginatedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetSellerInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSellerInformation" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetSellerInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSellerInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetSellerIndicators_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSellerIndicators" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetSellerIndicators_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSellerIndicatorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetServiceOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServiceOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetServiceOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServiceOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_ValidateOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_ValidateOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_ManageParcel_InputMessage">
+    <wsdl:part name="parameters" element="tns:ManageParcel" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_ManageParcel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ManageParcelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_CreateRefundVoucherAfterShipment_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateRefundVoucherAfterShipment" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_CreateRefundVoucherAfterShipment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateRefundVoucherAfterShipmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_CreateRefundVoucher_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateRefundVoucher" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_CreateRefundVoucher_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateRefundVoucherResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetGlobalConfiguration_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGlobalConfiguration" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetGlobalConfiguration_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGlobalConfigurationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GenerateDiscussionMailGuid_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateDiscussionMailGuid" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GenerateDiscussionMailGuid_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateDiscussionMailGuidResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitRelaysFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitRelaysFile" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitRelaysFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitRelaysFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetRelaysFileSubmissionResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRelaysFileSubmissionResult" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetRelaysFileSubmissionResult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRelaysFileSubmissionResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetParcelShopList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetParcelShopList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetParcelShopList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetParcelShopListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_CloseDiscussionList_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloseDiscussionList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_CloseDiscussionList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloseDiscussionListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOrderClaimList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderClaimList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOrderClaimList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderClaimListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOrderQuestionList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderQuestionList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOrderQuestionList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderQuestionListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOfferQuestionList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferQuestionList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetOfferQuestionList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferQuestionListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetDiscussionMailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDiscussionMailList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetDiscussionMailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDiscussionMailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_CreateExternalOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateExternalOrder" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_CreateExternalOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateExternalOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetExternalOrderStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalOrderStatus" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetExternalOrderStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalOrderStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetProductStockList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductStockList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetProductStockList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductStockListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentActivationReportList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentActivationReportList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentActivationReportList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentActivationReportListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentOrderListToSupply_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentOrderListToSupply" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentOrderListToSupply_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentOrderListToSupplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitFulfilmentSupplyOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFulfilmentSupplyOrder" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitFulfilmentSupplyOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFulfilmentSupplyOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitFulfilmentOnDemandSupplyOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFulfilmentOnDemandSupplyOrder" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitFulfilmentOnDemandSupplyOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFulfilmentOnDemandSupplyOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentDeliveryDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentDeliveryDocument" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentDeliveryDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentDeliveryDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitOfferStateAction_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitOfferStateAction" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitOfferStateAction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitOfferStateActionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentSupplyOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentSupplyOrder" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentSupplyOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentSupplyOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitFulfilmentActivation_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFulfilmentActivation" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_SubmitFulfilmentActivation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFulfilmentActivationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentSupplyOrderReportList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentSupplyOrderReportList" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceAPIService_GetFulfilmentSupplyOrderReportList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFulfilmentSupplyOrderReportListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceApiServiceRest_GetOfferProductListPaginatedRest_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferProductListPaginatedRest" />
+  </wsdl:message>
+  <wsdl:message name="IMarketplaceApiServiceRest_GetOfferProductListPaginatedRest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOfferProductListPaginatedRestResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IMarketplaceAPIService">
+    <wsdl:operation name="GetProductList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductList" message="tns:IMarketplaceAPIService_GetProductList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductListResponse" message="tns:IMarketplaceAPIService_GetProductList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitProductPackage">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitProductPackage" message="tns:IMarketplaceAPIService_SubmitProductPackage_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitProductPackageResponse" message="tns:IMarketplaceAPIService_SubmitProductPackage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductPackageSubmissionResult">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductPackageSubmissionResult" message="tns:IMarketplaceAPIService_GetProductPackageSubmissionResult_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductPackageSubmissionResultResponse" message="tns:IMarketplaceAPIService_GetProductPackageSubmissionResult_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductPackageProductMatchingFileData">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductPackageProductMatchingFileData" message="tns:IMarketplaceAPIService_GetProductPackageProductMatchingFileData_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductPackageProductMatchingFileDataResponse" message="tns:IMarketplaceAPIService_GetProductPackageProductMatchingFileData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllowedCategoryTree">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetAllowedCategoryTree" message="tns:IMarketplaceAPIService_GetAllowedCategoryTree_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetAllowedCategoryTreeResponse" message="tns:IMarketplaceAPIService_GetAllowedCategoryTree_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAllowedCategoryTree">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetAllAllowedCategoryTree" message="tns:IMarketplaceAPIService_GetAllAllowedCategoryTree_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetAllAllowedCategoryTreeResponse" message="tns:IMarketplaceAPIService_GetAllAllowedCategoryTree_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetModelList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetModelList" message="tns:IMarketplaceAPIService_GetModelList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetModelListResponse" message="tns:IMarketplaceAPIService_GetModelList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllModelList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetAllModelList" message="tns:IMarketplaceAPIService_GetAllModelList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetAllModelListResponse" message="tns:IMarketplaceAPIService_GetAllModelList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBrandList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetBrandList" message="tns:IMarketplaceAPIService_GetBrandList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetBrandListResponse" message="tns:IMarketplaceAPIService_GetBrandList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductListByIdentifier">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductListByIdentifier" message="tns:IMarketplaceAPIService_GetProductListByIdentifier_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductListByIdentifierResponse" message="tns:IMarketplaceAPIService_GetProductListByIdentifier_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOfferPackage">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitOfferPackage" message="tns:IMarketplaceAPIService_SubmitOfferPackage_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitOfferPackageResponse" message="tns:IMarketplaceAPIService_SubmitOfferPackage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOfferPackageSubmissionResult">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOfferPackageSubmissionResult" message="tns:IMarketplaceAPIService_GetOfferPackageSubmissionResult_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOfferPackageSubmissionResultResponse" message="tns:IMarketplaceAPIService_GetOfferPackageSubmissionResult_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOfferList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOfferList" message="tns:IMarketplaceAPIService_GetOfferList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOfferListResponse" message="tns:IMarketplaceAPIService_GetOfferList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOfferListPaginated">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOfferListPaginated" message="tns:IMarketplaceAPIService_GetOfferListPaginated_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOfferListPaginatedResponse" message="tns:IMarketplaceAPIService_GetOfferListPaginated_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSellerInformation">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetSellerInformation" message="tns:IMarketplaceAPIService_GetSellerInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetSellerInformationResponse" message="tns:IMarketplaceAPIService_GetSellerInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSellerIndicators">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetSellerIndicators" message="tns:IMarketplaceAPIService_GetSellerIndicators_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetSellerIndicatorsResponse" message="tns:IMarketplaceAPIService_GetSellerIndicators_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOrderList" message="tns:IMarketplaceAPIService_GetOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOrderListResponse" message="tns:IMarketplaceAPIService_GetOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceOrderList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetServiceOrderList" message="tns:IMarketplaceAPIService_GetServiceOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetServiceOrderListResponse" message="tns:IMarketplaceAPIService_GetServiceOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateOrderList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/ValidateOrderList" message="tns:IMarketplaceAPIService_ValidateOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/ValidateOrderListResponse" message="tns:IMarketplaceAPIService_ValidateOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ManageParcel">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/ManageParcel" message="tns:IMarketplaceAPIService_ManageParcel_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/ManageParcelResponse" message="tns:IMarketplaceAPIService_ManageParcel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateRefundVoucherAfterShipment">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/CreateRefundVoucherAfterShipment" message="tns:IMarketplaceAPIService_CreateRefundVoucherAfterShipment_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/CreateRefundVoucherAfterShipmentResponse" message="tns:IMarketplaceAPIService_CreateRefundVoucherAfterShipment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateRefundVoucher">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/CreateRefundVoucher" message="tns:IMarketplaceAPIService_CreateRefundVoucher_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/CreateRefundVoucherResponse" message="tns:IMarketplaceAPIService_CreateRefundVoucher_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalConfiguration">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetGlobalConfiguration" message="tns:IMarketplaceAPIService_GetGlobalConfiguration_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetGlobalConfigurationResponse" message="tns:IMarketplaceAPIService_GetGlobalConfiguration_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateDiscussionMailGuid">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GenerateDiscussionMailGuid" message="tns:IMarketplaceAPIService_GenerateDiscussionMailGuid_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GenerateDiscussionMailGuidResponse" message="tns:IMarketplaceAPIService_GenerateDiscussionMailGuid_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitRelaysFile">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitRelaysFile" message="tns:IMarketplaceAPIService_SubmitRelaysFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitRelaysFileResponse" message="tns:IMarketplaceAPIService_SubmitRelaysFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRelaysFileSubmissionResult">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetRelaysFileSubmissionResult" message="tns:IMarketplaceAPIService_GetRelaysFileSubmissionResult_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetRelaysFileSubmissionResultResponse" message="tns:IMarketplaceAPIService_GetRelaysFileSubmissionResult_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetParcelShopList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetParcelShopList" message="tns:IMarketplaceAPIService_GetParcelShopList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetParcelShopListResponse" message="tns:IMarketplaceAPIService_GetParcelShopList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseDiscussionList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/CloseDiscussionList" message="tns:IMarketplaceAPIService_CloseDiscussionList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/CloseDiscussionListResponse" message="tns:IMarketplaceAPIService_CloseDiscussionList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderClaimList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOrderClaimList" message="tns:IMarketplaceAPIService_GetOrderClaimList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOrderClaimListResponse" message="tns:IMarketplaceAPIService_GetOrderClaimList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderQuestionList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOrderQuestionList" message="tns:IMarketplaceAPIService_GetOrderQuestionList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOrderQuestionListResponse" message="tns:IMarketplaceAPIService_GetOrderQuestionList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOfferQuestionList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOfferQuestionList" message="tns:IMarketplaceAPIService_GetOfferQuestionList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetOfferQuestionListResponse" message="tns:IMarketplaceAPIService_GetOfferQuestionList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDiscussionMailList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetDiscussionMailList" message="tns:IMarketplaceAPIService_GetDiscussionMailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetDiscussionMailListResponse" message="tns:IMarketplaceAPIService_GetDiscussionMailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateExternalOrder">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/CreateExternalOrder" message="tns:IMarketplaceAPIService_CreateExternalOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/CreateExternalOrderResponse" message="tns:IMarketplaceAPIService_CreateExternalOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalOrderStatus">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetExternalOrderStatus" message="tns:IMarketplaceAPIService_GetExternalOrderStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetExternalOrderStatusResponse" message="tns:IMarketplaceAPIService_GetExternalOrderStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductStockList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductStockList" message="tns:IMarketplaceAPIService_GetProductStockList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetProductStockListResponse" message="tns:IMarketplaceAPIService_GetProductStockList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFulfilmentActivationReportList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentActivationReportList" message="tns:IMarketplaceAPIService_GetFulfilmentActivationReportList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentActivationReportListResponse" message="tns:IMarketplaceAPIService_GetFulfilmentActivationReportList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFulfilmentOrderListToSupply">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentOrderListToSupply" message="tns:IMarketplaceAPIService_GetFulfilmentOrderListToSupply_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentOrderListToSupplyResponse" message="tns:IMarketplaceAPIService_GetFulfilmentOrderListToSupply_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFulfilmentSupplyOrder">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitFulfilmentSupplyOrder" message="tns:IMarketplaceAPIService_SubmitFulfilmentSupplyOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitFulfilmentSupplyOrderResponse" message="tns:IMarketplaceAPIService_SubmitFulfilmentSupplyOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFulfilmentOnDemandSupplyOrder">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitFulfilmentOnDemandSupplyOrder" message="tns:IMarketplaceAPIService_SubmitFulfilmentOnDemandSupplyOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitFulfilmentOnDemandSupplyOrderResponse" message="tns:IMarketplaceAPIService_SubmitFulfilmentOnDemandSupplyOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFulfilmentDeliveryDocument">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentDeliveryDocument" message="tns:IMarketplaceAPIService_GetFulfilmentDeliveryDocument_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentDeliveryDocumentResponse" message="tns:IMarketplaceAPIService_GetFulfilmentDeliveryDocument_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOfferStateAction">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitOfferStateAction" message="tns:IMarketplaceAPIService_SubmitOfferStateAction_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitOfferStateActionResponse" message="tns:IMarketplaceAPIService_SubmitOfferStateAction_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFulfilmentSupplyOrder">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentSupplyOrder" message="tns:IMarketplaceAPIService_GetFulfilmentSupplyOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentSupplyOrderResponse" message="tns:IMarketplaceAPIService_GetFulfilmentSupplyOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFulfilmentActivation">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitFulfilmentActivation" message="tns:IMarketplaceAPIService_SubmitFulfilmentActivation_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/SubmitFulfilmentActivationResponse" message="tns:IMarketplaceAPIService_SubmitFulfilmentActivation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFulfilmentSupplyOrderReportList">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentSupplyOrderReportList" message="tns:IMarketplaceAPIService_GetFulfilmentSupplyOrderReportList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceAPIService/GetFulfilmentSupplyOrderReportListResponse" message="tns:IMarketplaceAPIService_GetFulfilmentSupplyOrderReportList_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IMarketplaceApiServiceRest">
+    <wsdl:operation name="GetOfferProductListPaginatedRest">
+      <wsdl:input wsaw:Action="http://www.cdiscount.com/IMarketplaceApiServiceRest/GetOfferProductListPaginatedRest" message="tns:IMarketplaceApiServiceRest_GetOfferProductListPaginatedRest_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cdiscount.com/IMarketplaceApiServiceRest/GetOfferProductListPaginatedRestResponse" message="tns:IMarketplaceApiServiceRest_GetOfferProductListPaginatedRest_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Order" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Order" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd0" namespace="http://www.cdiscount.com" />
+  <xs:complexType name="OrderIntegrationRequest">
+    <xs:sequence>
+      <xs:element name="Order" nillable="true" type="tns:ExternalOrder" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderIntegrationRequest" nillable="true" type="tns:OrderIntegrationRequest" />
+  <xs:complexType name="ExternalOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+      <xs:element name="Corporation" nillable="true" type="xs:string" />
+      <xs:element name="Customer" nillable="true" type="tns:ExternalCustomer" />
+      <xs:element name="CustomerOrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderDate" nillable="true" type="xs:dateTime" />
+      <xs:element name="OrderLineList" nillable="true" type="tns:ArrayOfExternalOrderLine" />
+      <xs:element name="ShippingMode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExternalOrder" nillable="true" type="tns:ExternalOrder" />
+  <xs:complexType name="ExternalCustomer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalShippingAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CellPhoneNumber" nillable="true" type="xs:string" />
+      <xs:element name="Civility" nillable="true" type="xs:string" />
+      <xs:element name="CustomerEmailAddress" nillable="true" type="xs:string" />
+      <xs:element name="CustomerFirstName" nillable="true" type="xs:string" />
+      <xs:element name="CustomerLastName" nillable="true" type="xs:string" />
+      <xs:element name="LandlinePhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Locality" nillable="true" type="xs:string" />
+      <xs:element name="ShippingAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShippingAddressTitle" nillable="true" type="xs:string" />
+      <xs:element name="ShippingCity" nillable="true" type="xs:string" />
+      <xs:element name="ShippingCountry" nillable="true" type="xs:string" />
+      <xs:element name="ShippingPostalCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExternalCustomer" nillable="true" type="tns:ExternalCustomer" />
+  <xs:complexType name="ArrayOfExternalOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ExternalOrderLine" nillable="true" type="tns:ExternalOrderLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfExternalOrderLine" nillable="true" type="tns:ArrayOfExternalOrderLine" />
+  <xs:complexType name="ExternalOrderLine">
+    <xs:sequence>
+      <xs:element name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductReference" nillable="true" type="xs:string" />
+      <xs:element name="Quantity" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExternalOrderLine" nillable="true" type="tns:ExternalOrderLine" />
+  <xs:complexType name="OrderStatusRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Corporation" nillable="true" type="xs:string" />
+      <xs:element name="CustomerOrderNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderStatusRequest" nillable="true" type="tns:OrderStatusRequest" />
+  <xs:complexType name="OrderStatusMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://www.cdiscount.com" base="q1:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Status" type="q1:ExternalOrderStatus" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderStatusMessage" nillable="true" type="tns:OrderStatusMessage" />
+</xs:schema>

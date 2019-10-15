@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Fulfilment" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Fulfilment" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd0" namespace="http://www.cdiscount.com" />
+  <xs:complexType name="FulfilmentDeliveryDocumentMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://www.cdiscount.com" base="q1:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PdfDocument" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FulfilmentDeliveryDocumentMessage" nillable="true" type="tns:FulfilmentDeliveryDocumentMessage" />
+  <xs:simpleType name="OfferStateActionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Publish" />
+      <xs:enumeration value="Unpublish" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OfferStateActionType" nillable="true" type="tns:OfferStateActionType" />
+  <xs:complexType name="ArrayOfProductActivationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductActivationData" nillable="true" type="tns:ProductActivationData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductActivationData" nillable="true" type="tns:ArrayOfProductActivationData" />
+  <xs:complexType name="ProductActivationData">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://www.cdiscount.com" name="Action" type="q2:FulfilmentProductActionType" />
+      <xs:element name="Height" type="xs:double" />
+      <xs:element name="Length" type="xs:double" />
+      <xs:element name="ProductEan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerProductReference" nillable="true" type="xs:string" />
+      <xs:element name="Weight" type="xs:double" />
+      <xs:element name="Width" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductActivationData" nillable="true" type="tns:ProductActivationData" />
+</xs:schema>

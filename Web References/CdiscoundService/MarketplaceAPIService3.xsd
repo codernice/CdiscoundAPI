@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://www.cdiscount.com/ProductByIdentifier" elementFormDefault="qualified" targetNamespace="http://www.cdiscount.com/ProductByIdentifier" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd0" namespace="http://www.cdiscount.com" />
+  <xs:complexType name="ProductListByIdentifierMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://www.cdiscount.com" base="q1:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ProductListByIdentifier" nillable="true" type="tns:ArrayOfProductByIdentifier" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProductListByIdentifierMessage" nillable="true" type="tns:ProductListByIdentifierMessage" />
+  <xs:complexType name="ArrayOfProductByIdentifier">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductByIdentifier" nillable="true" type="tns:ProductByIdentifier" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductByIdentifier" nillable="true" type="tns:ArrayOfProductByIdentifier" />
+  <xs:complexType name="ProductByIdentifier">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BrandName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CategoryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Color" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ean" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FatherProductId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HasError" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ImageUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://www.cdiscount.com" minOccurs="0" name="ProductType" nillable="true" type="q2:ProductTypeEnum" />
+      <xs:element minOccurs="0" name="Size" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductByIdentifier" nillable="true" type="tns:ProductByIdentifier" />
+</xs:schema>

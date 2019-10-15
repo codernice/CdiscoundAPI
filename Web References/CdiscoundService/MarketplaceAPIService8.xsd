@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd0" namespace="http://www.cdiscount.com" />
+  <xs:complexType name="OrderIntegrationMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://www.cdiscount.com" base="q1:ServiceBaseAPIMessage">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderIntegrationMessage" nillable="true" type="tns:OrderIntegrationMessage" />
+</xs:schema>

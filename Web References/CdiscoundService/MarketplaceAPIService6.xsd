@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Product" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Cdiscount.Service.Marketplace.API.External.Contract.Data.Product" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd0" namespace="http://www.cdiscount.com" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="https://wsvc.cdiscount.com/MarketplaceAPIService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="BrandListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://www.cdiscount.com" base="q1:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BrandList" nillable="true" type="q1:ArrayOfBrand" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BrandListMessage" nillable="true" type="tns:BrandListMessage" />
+  <xs:complexType name="FulfilmentProductRequest">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BarCodeList" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element xmlns:q3="http://www.cdiscount.com" minOccurs="0" name="BlockedStock" type="q3:StockFilter" />
+      <xs:element xmlns:q4="http://www.cdiscount.com" minOccurs="0" name="FulfilmentReferencement" type="q4:FbcReferencementFilter" />
+      <xs:element xmlns:q5="http://www.cdiscount.com" minOccurs="0" name="ShippableStock" type="q5:StockFilter" />
+      <xs:element xmlns:q6="http://www.cdiscount.com" minOccurs="0" name="SoldOut" type="q6:SoldOut" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FulfilmentProductRequest" nillable="true" type="tns:FulfilmentProductRequest" />
+  <xs:complexType name="ProductStockListMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q7="http://www.cdiscount.com" base="q7:ServiceBaseAPIMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ProductStockList" nillable="true" type="tns:ArrayOfProductStock" />
+          <xs:element minOccurs="0" name="Status" type="q7:FulfilmentProductListStatus" />
+          <xs:element minOccurs="0" name="TotalProductCount" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProductStockListMessage" nillable="true" type="tns:ProductStockListMessage" />
+  <xs:complexType name="ArrayOfProductStock">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductStock" nillable="true" type="tns:ProductStock" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductStock" nillable="true" type="tns:ArrayOfProductStock" />
+  <xs:complexType name="ProductStock">
+    <xs:sequence>
+      <xs:element name="AverageWeeklySales" type="xs:int" />
+      <xs:element name="BlockedStock" type="xs:int" />
+      <xs:element name="CurrentWeeklySales" type="xs:int" />
+      <xs:element name="DamagedReturns" type="xs:int" />
+      <xs:element name="DeliveryDisputes" type="xs:int" />
+      <xs:element name="Ean" nillable="true" type="xs:string" />
+      <xs:element name="FodStock" nillable="true" type="xs:int" />
+      <xs:element name="ForecastingStockShortage" type="xs:int" />
+      <xs:element name="FrontStock" type="xs:int" />
+      <xs:element name="IncomingShipment" type="xs:int" />
+      <xs:element name="IsReferenced" type="xs:boolean" />
+      <xs:element name="Libelle" nillable="true" type="xs:string" />
+      <xs:element name="LogisticFees" type="xs:double" />
+      <xs:element name="OngoingRecoveries" type="xs:int" />
+      <xs:element name="OrderInProgress" type="xs:int" />
+      <xs:element name="OverheadOutsizeFees" type="xs:double" />
+      <xs:element name="ProductConditionId" type="tns:ProductCondition" />
+      <xs:element name="ProductState" type="tns:ProductState" />
+      <xs:element name="SellerReference" nillable="true" type="xs:string" />
+      <xs:element name="ShippableStock" type="xs:int" />
+      <xs:element name="Sku" nillable="true" type="xs:string" />
+      <xs:element name="StockCategory" nillable="true" type="xs:string" />
+      <xs:element name="StockFees" type="xs:double" />
+      <xs:element name="StockInWarehouse" type="xs:int" />
+      <xs:element name="Warehouse" nillable="true" type="xs:string" />
+      <xs:element name="WarehouseCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductStock" nillable="true" type="tns:ProductStock" />
+  <xs:simpleType name="ProductCondition">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UsedLikeNew">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="UsedVeryGoodCondition">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="UsedGoodCondition">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="UsedSatisfactoryCondtion">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NewRefurbished">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NewNew">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProductCondition" nillable="true" type="tns:ProductCondition" />
+  <xs:simpleType name="ProductState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="New">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Used">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProductState" nillable="true" type="tns:ProductState" />
+</xs:schema>
