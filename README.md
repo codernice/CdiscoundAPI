@@ -3,6 +3,7 @@
 Cdiscount是目前法国最大的电子商务平台，从它的[Marketplace API](https://dev.cdiscount.com/marketplace/)来看，API这快也算是挺成熟的。文档挺详细的，调用参数、示例和返回值等都很详细。但就是这么一个API文档详细的平台，也存在着一些坑，在此与大家分享。
 
 [查看原文](https://www.codernice.top/articles/4b72b298.html)
+
 ![image](https://codernice.coding.me/pictureurl/codernice/Cdiscount.jpg)
 
 # 生成token
